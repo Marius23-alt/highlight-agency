@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlight Agency - Communication & Stratégie à Toulouse</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter & Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         /* Configuration des polices */
@@ -197,11 +194,23 @@
         }
 
         /* Styles Équipe & Formulaire */
-        .team-member { @apply text-center; }
-        .team-photo {
-            @apply w-40 h-40 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-lg transition duration-300 ease-in-out;
+        /* Styles Équipe */
+        .team-member { 
+            @apply text-center; 
         }
+
+        .team-photo {
+            /* Ajout des dimensions explicites pour garantir la taille (légèrement agrandie à 320px) */
+            width: 320px;
+            height: 320px;
+            object-fit: cover; /* Maintient l'aspect ratio et recadre l'image dans l'espace */
+
+            /* Les autres utilitaires Tailwind sont conservés */
+            @apply rounded-full mx-auto mb-4 border-4 border-white shadow-lg transition duration-300 ease-in-out aspect-square;
+        }
+
         .team-member:hover .team-photo {
+            /* Conserver l'effet de survol d'origine */
             border-color: var(--primary-color);
             @apply transform scale-105;
         }
@@ -355,16 +364,13 @@
 </head>
 <body class="bg-white text-dark overflow-x-hidden">
 
-    <!-- ÉLÉMENTS DU CURSEUR PERSONNALISÉ -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- Navbar -->
     <nav class="bg-white/90 backdrop-blur-md shadow-sm fixed w-full z-50 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-24">
                 <div class="flex-shrink-0 flex items-center group cursor-pointer">
-                    <!-- Logo Vectoriel -->
                     <div class="relative w-12 h-12 mr-3 transition-transform duration-300 group-hover:scale-105">
                         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="5" y="5" width="90" height="90" rx="15" stroke="#ff85a1" stroke-width="6" fill="white"/>
@@ -381,12 +387,9 @@
                     </div>
                 </div>
                 
-                <!-- Menu Desktop avec Animation Bulle -->
                 <div class="hidden md:flex items-center space-x-2 relative" id="desktop-menu-container">
-                    <!-- La Bulle Flottante -->
                     <div id="nav-bubble"></div>
 
-                    <!-- Liens -->
                     <a href="#home" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Accueil</a>
                     <a href="#about" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">À propos</a>
                     <a href="#services" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Services</a>
@@ -394,7 +397,6 @@
                     <a href="#contact" class="btn-highlight shadow-pink-200 ml-4">Contactez-nous</a>
                 </div>
 
-                <!-- Bouton menu mobile -->
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="focus:outline-none p-2">
                         <div class="burger-icon">
@@ -406,7 +408,6 @@
                 </div>
             </div>
         </div>
-        <!-- Menu mobile -->
         <div class="md:hidden bg-white shadow-lg" id="mobile-menu">
             <div class="px-2 pt-2 pb-5 space-y-1 sm:px-3">
                 <a href="#home" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Accueil</a>
@@ -420,9 +421,7 @@
         </div>
     </nav>
 
-    <!-- Section Hero (Fond décoratif) -->
     <header id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-white relative overflow-hidden min-h-[85vh] flex items-center">
-        <!-- Cercle décoratif en arrière-plan -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
             <div class="absolute -top-40 -right-40 w-96 h-96 bg-pink-100 opacity-50 rounded-full filter blur-3xl animate-pulse"></div>
             <div class="absolute bottom-0 left-20 w-80 h-80 bg-pink-50 opacity-60 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
@@ -445,7 +444,6 @@
                 </div>
             </div>
         </div>
-        <!-- Vague décorative en bas de section -->
         <div class="absolute bottom-0 w-full">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="text-gray-50 fill-current">
                 <path fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
@@ -453,28 +451,21 @@
         </div>
     </header>
 
-    <!-- Section À propos -->
     <section id="about" class="py-24 bg-gray-50 relative overflow-hidden">
-        <!-- Conteneur d'image en arrière-plan avec filtre -->
         <div class="absolute inset-0 z-0">
-            <!-- Image de Toulouse - Remplacement du src statique par un URL plus thématique et stable -->
             <img src="https://images.unsplash.com/photo-1549721759-42b785d0d869?ixlib=rb-1.2.1&auto=format&fit=crop&w=1800&q=80" 
                  alt="Ville de Toulouse en arrière-plan" 
                  class="w-full h-full object-cover opacity-10" 
                  onerror="this.onerror=null; this.src='https://placehold.co/1800x800/ffb7c5/ffffff?text=Toulouse';"
             >
-            <!-- Overlay pour garantir la lisibilité du texte -->
             <div class="absolute inset-0 bg-white opacity-90"></div>
         </div>
         
-        <!-- Contenu de la section À propos -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                 
-                <!-- Bloc de gauche (Image/Décoration) - Remplacé par une image statique plus stylisée et le texte est transféré à la place de l'ancienne image-->
                 <div class="relative w-full h-full min-h-[400px]" data-aos="fade-right" data-aos-duration="1000">
-                     <!-- Utilisation d'une image/mockup plus pertinente -->
-                    <div class="absolute inset-0 flex items-center justify-center">
+                     <div class="absolute inset-0 flex items-center justify-center">
                          <img src="./images/Toulouse.jpg" alt="Mockup Branding Highlight Agency" class="relative rounded-2xl shadow-xl w-full h-auto object-cover max-w-lg z-10 border-4 border-white transform rotate-3 hover:rotate-0 transition duration-500">
                     </div>
                 </div>
@@ -511,7 +502,6 @@
         </div>
     </section>
 
-    <!-- Section Services -->
     <section id="services" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="1000">
@@ -522,7 +512,6 @@
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Service 1: Stratégie -->
                 <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="100">
                     <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -532,7 +521,6 @@
                     <h3 class="text-xl font-bold text-dark mb-3 font-heading">Stratégie 🎯</h3>
                     <p class="text-gray-500 text-sm leading-relaxed">Stratégie sur mesure : Plan d'action précis pour atteindre vos objectifs.</p>
                 </div>
-                <!-- Service 2: Branding -->
                 <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="200">
                     <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -542,7 +530,6 @@
                     <h3 class="text-xl font-bold text-dark mb-3 font-heading">Identité Visuelle</h3>
                     <p class="text-gray-500 text-sm leading-relaxed">Branding qui donne du sens et fait briller ton image.</p>
                 </div>
-                <!-- Service 3: Web -->
                 <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="300">
                     <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -552,7 +539,6 @@
                     <h3 class="text-xl font-bold text-dark mb-3 font-heading">Création Digitale</h3>
                     <p class="text-gray-500 text-sm leading-relaxed">Sites web et applications conçus pour ta vision et tes utilisateurs.</p>
                 </div>
-                <!-- Service 4: Social -->
                 <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="400">
                     <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -566,8 +552,7 @@
         </div>
     </section>
 
-    <!-- Section Portfolio -->
-    <section id="portfolio" class="py-24 bg-white relative">
+    <section id="portfolio" class="py-24 bg-white relative overflow-x-hidden">
         <div class="absolute top-0 right-0 w-1/3 h-full bg-pink-50 skew-x-12 opacity-50 pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -587,7 +572,6 @@
             </div>
 
             <div class="portfolio-grid">
-                <!-- Projet 1 : E-commerce -->
                 <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="200">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Boutique Mode Minimaliste" class="portfolio-image">
@@ -610,7 +594,6 @@
                     </div>
                 </div>
 
-                <!-- Projet 2 : Branding -->
                 <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="300">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1599690184518-a6e5b47a1106?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Branding Cosmétique" class="portfolio-image">
@@ -633,7 +616,6 @@
                     </div>
                 </div>
 
-                <!-- Projet 3 : Social Media -->
                 <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="400">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Social Media Lifestyle" class="portfolio-image">
@@ -656,7 +638,6 @@
                     </div>
                 </div>
 
-                <!-- Projet 4 : App Mobile -->
                 <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="500">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="App Mobile" class="portfolio-image">
@@ -679,8 +660,7 @@
                     </div>
                 </div>
 
-                 <!-- Projet 5 : Tech/Analytics -->
-                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="600">
+                 <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="600">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="SEO Dashboard" class="portfolio-image">
                         <div class="portfolio-overlay">
@@ -702,7 +682,6 @@
                     </div>
                 </div>
 
-                <!-- Projet 6 : Vidéo -->
                 <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="700">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Production Vidéo" class="portfolio-image">
@@ -732,40 +711,36 @@
         </div>
     </section>
 
-    <!-- Section Équipe -->
     <section id="team" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
                 <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">L'Équipe Highlight</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Des experts passionnés, dédiés à votre réussite.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Membre 1 -->
+        <div class="flex flex-col md:flex-row md:justify-center gap-8">
                 <div class="team-member" data-aos="fade-up" data-aos-delay="100">
                     <img src="./images/Photo_dim.JPG" alt="Membre 1" class="team-photo">
                     <h3 class="text-xl font-bold text-dark font-heading">Dimitri</h3>
                     <p class="text-primary font-medium mb-2">Fondateur & Stratège</p>
                     <p class="text-gray-600 text-sm">Expert en stratégie digitale et développement d'entreprise.</p>
                 </div>
-                <!-- Membre 2 -->
                 <div class="team-member" data-aos="fade-up" data-aos-delay="200">
                     <img src="./images/Dim_sandwich.jpg" alt="Membre 2" class="team-photo">
                     <h3 class="text-xl font-bold text-dark font-heading">Erwan</h3>
-                    <p class="text-primary font-medium mb-2">Directrice Artistique</p>
-                    <p class="text-gray-600 text-sm">Créative passionnée, elle donne vie à votre identité visuelle.</p>
+                    <p class="text-primary font-medium mb-2">Directeur adjoint</p>
+                    <p class="text-gray-600 text-sm">Créateur passionné, il donne vie à votre identité visuelle.</p>
                 </div>
-                <!-- Membre 3 -->
                 <div class="team-member" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://source.unsplash.com/random/400x400/?portrait,man,developer" alt="Membre 3" class="team-photo">
-                    <h3 class="text-xl font-bold text-dark font-heading">Julien Leroy</h3>
+                    <img src="https://placehold.co/160x160/ffc2d1/e65a7c?text=J.L" alt="Membre 3" class="team-photo">
+                    <h3 class="text-xl font-bold text-dark font-heading"></h3>
                     <p class="text-primary font-medium mb-2">Lead Développeur</p>
-                    <p class="text-gray-600 text-sm">Maîtrise les technologies web pour des sites performants.</p>
+                    <p class="text-gray-600 text-sm">Maîtrise des technologies web pour des sites performants.</p>
                 </div>
+                
             </div>
         </div>
     </section>
 
-    <!-- Section Contact -->
     <section id="contact" class="py-24 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
@@ -804,7 +779,6 @@
                 </div>
                 <div class="bg-white p-10 rounded-2xl shadow-xl border border-pink-50" data-aos="fade-left">
                     <h3 class="text-2xl font-bold text-dark mb-6 font-heading">Envoyez un message</h3>
-                    <!-- Formulaire HTML simple sans JavaScript -->
                     <form action="#" method="POST" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
@@ -819,7 +793,6 @@
                         <div>
                             <label for="subject" class="block text-sm font-medium text-gray-500 mb-1 uppercase tracking-wide">Sujet</label>
                             <input type="text" id="subject" name="subject" class="contact-input" placeholder="Je souhaite refaire mon site..." required>
-                            <!-- Champ caché pour le marketing si nécessaire -->
                             <input type="hidden" name="source" value="Website Highlight Agency">
                         </div>
                         <div>
@@ -835,13 +808,11 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-white text-gray-800 py-16 border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <div class="col-span-1 md:col-span-1">
                     <a href="#" class="flex items-center mb-6">
-                        <!-- Petit Logo footer -->
                         <div class="w-8 h-8 mr-2 bg-pink-500 rounded-md flex items-center justify-center">
                             <span class="text-white font-bold text-lg">H</span>
                         </div>
@@ -855,7 +826,6 @@
                             <i class="fab fa-instagram"></i>
                             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.733.01 3.692.054 1.046.048 1.896.23 2.563.554.894.433 1.65 1.044 2.242 1.636.592.592 1.203 1.348 1.636 2.242.324.667.506 1.517.554 2.563.044.959.054 1.262.054 3.692 0 2.43-.01 2.733-.054 3.692-.048 1.046-.23 1.896-.554 2.563-.433.894-1.044 1.65-1.636 2.242-.592.592-1.348 1.203-2.242 1.636-.667.324-1.517.506-2.563.554C9.582 2.01 9.885 2 12.315 2zm-1.028 3.634c-2.514 0-2.823.01-3.8.056-1.013.047-1.71.217-2.164.443-.582.282-1.06.665-1.538 1.143-.478.478-.86.956-1.143 1.538-.226.454-.396 1.15-.443 2.164-.046.977-.056 1.286-.056 3.8 0 2.514.01 2.823.056 3.8.047 1.013.217 1.71.443 2.164.282.582.665 1.06 1.143 1.538.478.478.956.86 1.538 1.143.454.226 1.15.396 2.164.443.977.046 1.286.056 3.8.056 2.514 0 2.823-.01 3.8-.056 1.013-.047 1.71-.217 2.164-.443.582-.282 1.06-.665 1.538-1.143.478-.478.86-.956 1.143-1.538.226-.454.396-1.15.443-2.164.046-.977.056-1.286.056-3.8-.056zM12 6.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zm0 1.838a3.297 3.297 0 110 6.594 3.297 3.297 0 010-6.594zM17.338 5.25a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z" clip-rule="evenodd" /></svg>
                         </a>
-                        <!-- Autres réseaux sociaux simplifiés -->
                         <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-pink-500 hover:text-white transition duration-300">
                              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.7 3H4.3A1.3 1.3 0 003 4.3v15.4A1.3 1.3 0 004.3 21h15.4a1.3 1.3 0 001.3-1.3V4.3A1.3 1.3 0 0019.7 3zM8.339 18.338H5.667v-8.59h2.672v8.59zM7.004 8.574a1.548 1.548 0 11-.004-3.096 1.548 1.548 0 01.004 3.096zm11.335 9.764H15.67v-4.177c0-.996-.017-2.278-1.387-2.278-1.389 0-1.601 1.086-1.601 2.207v4.248h-2.667v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711z" clip-rule="evenodd" /></svg>
                         </a>
@@ -892,7 +862,6 @@
         </div>
     </footer>
 
-    <!-- AOS Animation Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialisation d'AOS
