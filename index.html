@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlight Agency - Communication & Stratégie à Toulouse</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter & Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Configuration des polices */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Cacher le curseur par défaut sur desktop pour laisser place au custom cursor */
+            cursor: none;
+        }
+        /* Rétablir le curseur sur mobile/tablette où le touch prévaut */
+        @media (max-width: 1024px) {
+            body { cursor: auto; }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Définition des couleurs personnalisées basées sur le logo */
+        :root {
+            --primary-color: #ff85a1; /* Rose principal (inspiré du logo) */
+            --primary-dark: #e65a7c; /* Rose plus foncé pour le texte/survol */
+            --secondary-color: #ffc2d1; /* Rose très pâle pour les dégradés */
+            --dark-color: #2d3748; /* Gris anthracite doux pour le texte */
+            --light-color: #fff0f3; /* Fond légèrement rosé très pâle */
+            --white: #ffffff;
+        }
+
+        /* Dégradés personnalisés */
+        .bg-gradient-highlight {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        .text-gradient-highlight {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Styles de boutons */
+        .btn-highlight {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 14px 0 rgba(255, 133, 161, 0.39);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: none; /* Important pour le custom cursor */
+        }
+        .btn-highlight:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 133, 161, 0.23);
+        }
+        
+        .btn-highlight-outline {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            background: transparent;
+            transition: all 0.3s ease;
+            cursor: none; /* Important pour le custom cursor */
+        }
+        .btn-highlight-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Animations de section */
+        .section-transition {
+            @apply transition-all duration-500 ease-in-out;
+        }
+
+        /* Effets de survol pour les cartes de service */
+        .service-card {
+            @apply bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-2;
+            cursor: none;
+        }
+        .service-icon {
+            @apply text-5xl mb-6 text-pink-400 transition duration-300 ease-in-out;
+        }
+        .service-card:hover .service-icon {
+            @apply text-pink-600 transform scale-110;
+        }
+
+        /* Styles Portfolio */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .portfolio-card {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: none;
+        }
+        
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -10px rgba(255, 133, 161, 0.3);
+        }
+
+        .portfolio-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 75%; /* Ratio 4:3 */
+        }
+
+        .portfolio-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .portfolio-card:hover .portfolio-image {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+        
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-content {
+            position: relative;
+            z-index: 10;
+            background: white;
+            padding: 1.5rem;
+            border-top: 4px solid var(--primary-color);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-tag {
+            display: inline-block;
+            background: var(--light-color);
+            color: var(--primary-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #eee;
+            color: var(--dark-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 99px;
+            cursor: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(255, 133, 161, 0.3);
+        }
+
+        /* Styles Équipe & Formulaire */
+        .team-member { @apply text-center; }
+        .team-photo {
+            @apply w-40 h-40 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-lg transition duration-300 ease-in-out;
+        }
+        .team-member:hover .team-photo {
+            border-color: var(--primary-color);
+            @apply transform scale-105;
+        }
+        .contact-input {
+            @apply w-full border-2 border-gray-100 rounded-lg px-4 py-3 focus:outline-none focus:border-pink-400 transition duration-300 bg-gray-50;
+            cursor: none;
+        }
+        
+        /* Footer Links */
+        footer a {
+            @apply text-gray-400 hover:text-pink-400 transition duration-300;
+            cursor: none;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ffb7c5; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff8fa3; }
+
+        /* --- STYLES CURSEUR PERSONNALISÉ --- */
+        
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none; /* Le curseur ne doit pas bloquer les clics */
+        }
+        
+        /* Le point central */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
+        }
+        
+        /* Le cercle autour */
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--primary-color);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        
+        /* État "Hover" du curseur (quand on survole un lien/bouton) */
+        body.hover-active .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 133, 161, 0.1);
+            border-color: transparent;
+            mix-blend-mode: multiply;
+        }
+
+        /* Cacher le custom cursor sur mobile */
+        @media (max-width: 1024px) {
+            .cursor-dot, .cursor-outline { display: none; }
+        }
+
+        /* --- STYLES ANIMATION MENU & MOBILE --- */
+        
+        /* Bulle de navigation (Desktop) */
+        #nav-bubble {
+            position: absolute;
+            height: 100%;
+            background-color: #fff0f3; /* light-color */
+            border-radius: 9999px;
+            z-index: -1; /* Derrière le texte */
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0; /* Caché par défaut */
+            pointer-events: none;
+        }
+        
+        /* Liens de navigation (Desktop) */
+        .nav-item {
+            position: relative;
+            z-index: 10;
+            cursor: none; /* Pour le custom cursor */
+        }
+
+        /* Animation Menu Mobile */
+        #mobile-menu {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #mobile-menu.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        /* Icône Burger */
+        .burger-icon {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        .burger-icon span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--dark-color);
+            border-radius: 9px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        .burger-icon span:nth-child(1) { top: 0px; }
+        .burger-icon span:nth-child(2) { top: 9px; }
+        .burger-icon span:nth-child(3) { top: 18px; }
+
+        .burger-icon.open span:nth-child(1) {
+            top: 9px;
+            transform: rotate(135deg);
+            background: var(--primary-color);
+        }
+        .burger-icon.open span:nth-child(2) { opacity: 0; left: -60px; }
+        .burger-icon.open span:nth-child(3) {
+            top: 9px;
+            transform: rotate(-135deg);
+            background: var(--primary-color);
+        }
+    </style>
+    <script>
+        // Configuration de Tailwind
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff85a1',
+                        secondary: '#ffc2d1',
+                        dark: '#2d3748',
+                        light: '#fff0f3',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-dark overflow-x-hidden">
+
+    <!-- ÉLÉMENTS DU CURSEUR PERSONNALISÉ -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navbar -->
+    <nav class="bg-white/90 backdrop-blur-md shadow-sm fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex-shrink-0 flex items-center group cursor-pointer">
+                    <!-- Logo Vectoriel -->
+                    <div class="relative w-12 h-12 mr-3 transition-transform duration-300 group-hover:scale-105">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="5" y="5" width="90" height="90" rx="15" stroke="#ff85a1" stroke-width="6" fill="white"/>
+                            <path d="M35 40 L65 30 V60 L35 50 V40 Z" stroke="#ff85a1" stroke-width="5" stroke-linejoin="round"/>
+                            <circle cx="35" cy="45" r="8" stroke="#ff85a1" stroke-width="5"/>
+                            <path d="M35 55 L25 75 M35 55 L45 75" stroke="#ff85a1" stroke-width="5" stroke-linecap="round"/>
+                            <path d="M75 25 L78 18 L81 25 L88 28 L81 31 L78 38 L75 31 L68 28 Z" fill="#ff85a1"/>
+                            <path d="M85 45 L87 40 L89 45 L94 47 L89 49 L87 54 L85 49 L80 47 Z" fill="#ff85a1"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-bold text-dark font-heading leading-none">Highlight</span>
+                        <span class="text-sm font-medium text-pink-400 font-heading tracking-widest uppercase">Agency</span>
+                    </div>
+                </div>
+                
+                <!-- Menu Desktop avec Animation Bulle -->
+                <div class="hidden md:flex items-center space-x-2 relative" id="desktop-menu-container">
+                    <!-- La Bulle Flottante -->
+                    <div id="nav-bubble"></div>
+
+                    <!-- Liens -->
+                    <a href="#home" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Accueil</a>
+                    <a href="#about" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">À propos</a>
+                    <a href="#services" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Services</a>
+                    <a href="#portfolio" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Réalisations</a>
+                    <a href="#contact" class="btn-highlight shadow-pink-200 ml-4">Contactez-nous</a>
+                </div>
+
+                <!-- Bouton menu mobile -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="focus:outline-none p-2">
+                        <div class="burger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Menu mobile -->
+        <div class="md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="px-2 pt-2 pb-5 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Accueil</a>
+                <a href="#about" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">À propos</a>
+                <a href="#services" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Services</a>
+                <a href="#portfolio" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Réalisations</a>
+                <a href="#team" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">L'Équipe</a>
+                <a href="#contact" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Contact</a>
+                <a href="#contact" class="block w-full text-center btn-highlight mt-4">Démarrer un projet</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section Hero (Fond décoratif) -->
+    <header id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-white relative overflow-hidden min-h-[85vh] flex items-center">
+        <!-- Cercle décoratif en arrière-plan -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-pink-100 opacity-50 rounded-full filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-0 left-20 w-80 h-80 bg-pink-50 opacity-60 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
+            <div class="absolute top-40 left-10 w-20 h-20 bg-pink-200 opacity-30 rounded-full filter blur-xl"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="text-center">
+                <div class="inline-block px-4 py-1 rounded-full bg-pink-50 text-pink-500 text-sm font-semibold mb-6 tracking-wide uppercase shadow-sm border border-pink-100" data-aos="fade-down">
+                    Création Digitale & Stratégie Sur Mesure
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold text-dark mb-8 leading-tight tracking-tight" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    Faisons briller votre image : <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-pink-600">Donnons du sens à ta vision</span>
+                </h1>
+                <p class="text-xl text-gray-500 mb-10 max-w-2xl mx-auto font-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                    Highlight Agency est ton partenaire de communication à <span class="font-medium text-dark">Toulouse</span>. Nous concevons une identité et un contenu digital qui maximisent ton impact.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+                    <a href="#contact" class="btn-highlight text-lg px-10">Démarrer un projet</a>
+                    <a href="#portfolio" class="btn-highlight-outline text-lg px-10">Voir le portfolio</a>
+                </div>
+            </div>
+        </div>
+        <!-- Vague décorative en bas de section -->
+        <div class="absolute bottom-0 w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="text-gray-50 fill-current">
+                <path fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Section À propos -->
+    <section id="about" class="py-24 bg-gray-50 relative overflow-hidden">
+        <!-- Conteneur d'image en arrière-plan avec filtre -->
+        <div class="absolute inset-0 z-0">
+            <!-- Image de Toulouse - Remplacement du src statique par un URL plus thématique et stable -->
+            <img src="https://images.unsplash.com/photo-1549721759-42b785d0d869?ixlib=rb-1.2.1&auto=format&fit=crop&w=1800&q=80" 
+                 alt="Ville de Toulouse en arrière-plan" 
+                 class="w-full h-full object-cover opacity-10" 
+                 onerror="this.onerror=null; this.src='https://placehold.co/1800x800/ffb7c5/ffffff?text=Toulouse';"
+            >
+            <!-- Overlay pour garantir la lisibilité du texte -->
+            <div class="absolute inset-0 bg-white opacity-90"></div>
+        </div>
+        
+        <!-- Contenu de la section À propos -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                
+                <!-- Bloc de gauche (Image/Décoration) - Remplacé par une image statique plus stylisée et le texte est transféré à la place de l'ancienne image-->
+                <div class="relative w-full h-full min-h-[400px]" data-aos="fade-right" data-aos-duration="1000">
+                     <!-- Utilisation d'une image/mockup plus pertinente -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                         <img src="./images/Toulouse.jpg" alt="Mockup Branding Highlight Agency" class="relative rounded-2xl shadow-xl w-full h-auto object-cover max-w-lg z-10 border-4 border-white transform rotate-3 hover:rotate-0 transition duration-500">
+                    </div>
+                </div>
+
+                <div data-aos="fade-left" data-aos-duration="1000">
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark mb-6">L'agence qui <span class="text-pink-500">met en lumière</span> votre talent</h2>
+                    <p class="text-lg text-gray-600 mb-6 font-light">
+                        Basée au cœur de Toulouse, Highlight Agency est née d'une volonté simple : apporter de la clarté et de l'élégance dans le monde bruyant de la communication.
+                    </p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-pink-100 flex items-center justify-center mt-1">
+                                <svg class="h-4 w-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <p class="ml-4 text-gray-600">Design minimaliste et impactant</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-pink-100 flex items-center justify-center mt-1">
+                                <svg class="h-4 w-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <p class="ml-4 text-gray-600">Stratégies sur-mesure et humaines</p>
+                        </div>
+                    </div>
+                    <a href="#contact" class="text-pink-500 font-semibold hover:text-pink-700 transition flex items-center group">
+                        En savoir plus sur nous 
+                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Services -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Notre Expertise Sur Mesure</h2>
+                <div class="w-24 h-1 bg-pink-400 mx-auto rounded-full mb-6"></div>
+                <p class="text-xl text-gray-500 max-w-3xl mx-auto font-light">
+                    Nous donnons du sens à ta vision. Découvrez notre offre de <span class="font-medium text-dark">contenu digital sur mesure</span>.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1: Stratégie -->
+                <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3 font-heading">Stratégie 🎯</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Stratégie sur mesure : Plan d'action précis pour atteindre vos objectifs.</p>
+                </div>
+                <!-- Service 2: Branding -->
+                <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3 font-heading">Identité Visuelle</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Branding qui donne du sens et fait briller ton image.</p>
+                </div>
+                <!-- Service 3: Web -->
+                <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3 font-heading">Création Digitale</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Sites web et applications conçus pour ta vision et tes utilisateurs.</p>
+                </div>
+                <!-- Service 4: Social -->
+                <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3 font-heading">Contenu Engagé</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Ton contenu digital sur mesure : communauté et visibilité boostées.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Portfolio -->
+    <section id="portfolio" class="py-24 bg-white relative">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-pink-50 skew-x-12 opacity-50 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Nos plus belles histoires</h2>
+                <div class="w-24 h-1 bg-pink-400 mx-auto rounded-full mb-8"></div>
+                <p class="text-xl text-gray-500 max-w-3xl mx-auto font-light mb-10">
+                    Chaque projet est une nouvelle aventure. Découvrez comment nous avons aidé nos clients à se démarquer.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
+                    <button class="filter-btn active">Tout voir</button>
+                    <button class="filter-btn">Identité Visuelle</button>
+                    <button class="filter-btn">Site Web</button>
+                    <button class="filter-btn">Social Media</button>
+                </div>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- Projet 1 : E-commerce -->
+                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Boutique Mode Minimaliste" class="portfolio-image">
+                        <div class="portfolio-overlay">
+                            <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-tag">E-commerce</span>
+                        <h3 class="text-xl font-bold text-dark mb-2 font-heading">Maison Coton</h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">Refonte complète de l'expérience d'achat pour une marque de prêt-à-porter éthique.</p>
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                            Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Projet 2 : Branding -->
+                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1599690184518-a6e5b47a1106?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Branding Cosmétique" class="portfolio-image">
+                        <div class="portfolio-overlay">
+                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-tag">Identité Visuelle</span>
+                        <h3 class="text-xl font-bold text-dark mb-2 font-heading">Lumière Bio</h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">Création d'une identité fraîche et naturelle pour une gamme de cosmétiques bio.</p>
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                            Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Projet 3 : Social Media -->
+                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Social Media Lifestyle" class="portfolio-image">
+                        <div class="portfolio-overlay">
+                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-tag">Social Media</span>
+                        <h3 class="text-xl font-bold text-dark mb-2 font-heading">Café des Artistes</h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">Stratégie Instagram et création de contenu vidéo pour un lieu culturel toulousain.</p>
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                            Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Projet 4 : App Mobile -->
+                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="500">
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="App Mobile" class="portfolio-image">
+                        <div class="portfolio-overlay">
+                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-tag">UI/UX Design</span>
+                        <h3 class="text-xl font-bold text-dark mb-2 font-heading">Guide Toulouse</h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">Conception d'une application touristique intuitive pour découvrir la ville rose.</p>
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                            Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                 <!-- Projet 5 : Tech/Analytics -->
+                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="600">
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="SEO Dashboard" class="portfolio-image">
+                        <div class="portfolio-overlay">
+                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-tag">SEO & Trafic</span>
+                        <h3 class="text-xl font-bold text-dark mb-2 font-heading">StartUp Connect</h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">Optimisation SEO technique et augmentation du trafic organique de 150%.</p>
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                            Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Projet 6 : Vidéo -->
+                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="700">
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Production Vidéo" class="portfolio-image">
+                        <div class="portfolio-overlay">
+                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-tag">Production Vidéo</span>
+                        <h3 class="text-xl font-bold text-dark mb-2 font-heading">Event Corp</h3>
+                        <p class="text-gray-500 text-sm line-clamp-2">Réalisation d'un film institutionnel moderne pour une convention d'entreprise.</p>
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                            Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center mt-16" data-aos="fade-up" data-aos-delay="800">
+                <a href="#contact" class="btn-highlight-outline px-8 py-3 text-lg border-2 hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-all">Découvrir tous nos projets</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Équipe -->
+    <section id="team" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">L'Équipe Highlight</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Des experts passionnés, dédiés à votre réussite.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Membre 1 -->
+                <div class="team-member" data-aos="fade-up" data-aos-delay="100">
+                    <img src="./images/Photo_dim.JPG" alt="Membre 1" class="team-photo">
+                    <h3 class="text-xl font-bold text-dark font-heading">Dimitri</h3>
+                    <p class="text-primary font-medium mb-2">Fondateur & Stratège</p>
+                    <p class="text-gray-600 text-sm">Expert en stratégie digitale et développement d'entreprise.</p>
+                </div>
+                <!-- Membre 2 -->
+                <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                    <img src="./images/Dim_sandwich.jpg" alt="Membre 2" class="team-photo">
+                    <h3 class="text-xl font-bold text-dark font-heading">Erwan</h3>
+                    <p class="text-primary font-medium mb-2">Directrice Artistique</p>
+                    <p class="text-gray-600 text-sm">Créative passionnée, elle donne vie à votre identité visuelle.</p>
+                </div>
+                <!-- Membre 3 -->
+                <div class="team-member" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://source.unsplash.com/random/400x400/?portrait,man,developer" alt="Membre 3" class="team-photo">
+                    <h3 class="text-xl font-bold text-dark font-heading">Julien Leroy</h3>
+                    <p class="text-primary font-medium mb-2">Lead Développeur</p>
+                    <p class="text-gray-600 text-sm">Maîtrise les technologies web pour des sites performants.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div data-aos="fade-right">
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark mb-6">Parlons de votre projet</h2>
+                    <p class="text-lg text-gray-600 mb-10 font-light">
+                        Prêt à faire briller votre marque ? Contactez-nous pour une consultation gratuite.
+                    </p>
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-center p-4 bg-white rounded-lg shadow-sm">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <span class="ml-4 text-gray-700 font-medium">12 Place du Capitole, 31000 Toulouse</span>
+                        </div>
+                        <div class="flex items-center p-4 bg-white rounded-lg shadow-sm">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C7.82 21 2 15.18 2 5V3z" />
+                                </svg>
+                            </div>
+                            <span class="ml-4 text-gray-700 font-medium">05 61 00 00 00</span>
+                        </div>
+                        <div class="flex items-center p-4 bg-white rounded-lg shadow-sm">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <span class="ml-4 text-gray-700 font-medium">hello@highlight-agency.fr</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-10 rounded-2xl shadow-xl border border-pink-50" data-aos="fade-left">
+                    <h3 class="text-2xl font-bold text-dark mb-6 font-heading">Envoyez un message</h3>
+                    <!-- Formulaire HTML simple sans JavaScript -->
+                    <form action="#" method="POST" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-500 mb-1 uppercase tracking-wide">Nom</label>
+                                <input type="text" id="name" name="name" class="contact-input" placeholder="Votre nom" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-500 mb-1 uppercase tracking-wide">Email</label>
+                                <input type="email" id="email" name="email" class="contact-input" placeholder="votre@email.com" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-500 mb-1 uppercase tracking-wide">Sujet</label>
+                            <input type="text" id="subject" name="subject" class="contact-input" placeholder="Je souhaite refaire mon site..." required>
+                            <!-- Champ caché pour le marketing si nécessaire -->
+                            <input type="hidden" name="source" value="Website Highlight Agency">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-500 mb-1 uppercase tracking-wide">Message</label>
+                            <textarea id="message" name="message" rows="4" class="contact-input resize-none" placeholder="Dites-nous en plus sur votre projet..." required></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn-highlight w-full py-4 text-lg">Envoyer ma demande</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white text-gray-800 py-16 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <a href="#" class="flex items-center mb-6">
+                        <!-- Petit Logo footer -->
+                        <div class="w-8 h-8 mr-2 bg-pink-500 rounded-md flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">H</span>
+                        </div>
+                        <span class="text-2xl font-bold text-dark font-heading">Highlight</span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">
+                        Agence de communication digitale à Toulouse. Stratégie, Design & Développement.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-pink-500 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.733.01 3.692.054 1.046.048 1.896.23 2.563.554.894.433 1.65 1.044 2.242 1.636.592.592 1.203 1.348 1.636 2.242.324.667.506 1.517.554 2.563.044.959.054 1.262.054 3.692 0 2.43-.01 2.733-.054 3.692-.048 1.046-.23 1.896-.554 2.563-.433.894-1.044 1.65-1.636 2.242-.592.592-1.348 1.203-2.242 1.636-.667.324-1.517.506-2.563.554C9.582 2.01 9.885 2 12.315 2zm-1.028 3.634c-2.514 0-2.823.01-3.8.056-1.013.047-1.71.217-2.164.443-.582.282-1.06.665-1.538 1.143-.478.478-.86.956-1.143 1.538-.226.454-.396 1.15-.443 2.164-.046.977-.056 1.286-.056 3.8 0 2.514.01 2.823.056 3.8.047 1.013.217 1.71.443 2.164.282.582.665 1.06 1.143 1.538.478.478.956.86 1.538 1.143.454.226 1.15.396 2.164.443.977.046 1.286.056 3.8.056 2.514 0 2.823-.01 3.8-.056 1.013-.047 1.71-.217 2.164-.443.582-.282 1.06-.665 1.538-1.143.478-.478.86-.956 1.143-1.538.226-.454.396-1.15.443-2.164.046-.977.056-1.286.056-3.8-.056zM12 6.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zm0 1.838a3.297 3.297 0 110 6.594 3.297 3.297 0 010-6.594zM17.338 5.25a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <!-- Autres réseaux sociaux simplifiés -->
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-pink-500 hover:text-white transition duration-300">
+                             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.7 3H4.3A1.3 1.3 0 003 4.3v15.4A1.3 1.3 0 004.3 21h15.4a1.3 1.3 0 001.3-1.3V4.3A1.3 1.3 0 0019.7 3zM8.339 18.338H5.667v-8.59h2.672v8.59zM7.004 8.574a1.548 1.548 0 11-.004-3.096 1.548 1.548 0 01.004 3.096zm11.335 9.764H15.67v-4.177c0-.996-.017-2.278-1.387-2.278-1.389 0-1.601 1.086-1.601 2.207v4.248h-2.667v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711z" clip-rule="evenodd" /></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-span-1">
+                    <h3 class="text-sm font-bold text-dark uppercase tracking-wider mb-6">Agence</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-gray-500 hover:text-pink-500 text-sm">À propos</a></li>
+                        <li><a href="#team" class="text-gray-500 hover:text-pink-500 text-sm">L'équipe</a></li>
+                        <li><a href="#careers" class="text-gray-500 hover:text-pink-500 text-sm">Carrières</a></li>
+                    </ul>
+                </div>
+                <div class="col-span-1">
+                    <h3 class="text-sm font-bold text-dark uppercase tracking-wider mb-6">Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-500 hover:text-pink-500 text-sm">Stratégie</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-pink-500 text-sm">Branding</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-pink-500 text-sm">Web</a></li>
+                    </ul>
+                </div>
+                <div class="col-span-1">
+                    <h3 class="text-sm font-bold text-dark uppercase tracking-wider mb-6">Légal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-500 hover:text-pink-500 text-sm">Mentions Légales</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-pink-500 text-sm">Confidentialité</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; <span id="current-year"></span> Highlight Agency.</p>
+                <p class="text-gray-300 text-xs">Fait avec &hearts; à Toulouse</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialisation d'AOS
+        AOS.init({
+            once: true, // L'animation ne se joue qu'une seule fois
+            offset: 120, // Décalage en pixels avant le déclenchement
+        });
+
+        // 1. LOGIQUE DE LA "BULLE DE NAVIGATION" (Lavalamp)
+        const navContainer = document.getElementById('desktop-menu-container');
+        const bubble = document.getElementById('nav-bubble');
+        const navLinks = document.querySelectorAll('.nav-item');
+
+        function moveBubble(element) {
+            if (!element) {
+                // Si on sort du menu, on choisit de la cacher.
+                bubble.style.opacity = '0';
+                return;
+            }
+            
+            // Calculer la position et la taille de l'élément survolé par rapport au conteneur parent
+            const rect = element.getBoundingClientRect();
+            const parentRect = navContainer.getBoundingClientRect();
+
+            const left = rect.left - parentRect.left;
+            const width = rect.width;
+
+            bubble.style.width = `${width}px`;
+            bubble.style.transform = `translateX(${left}px)`;
+            bubble.style.opacity = '1';
+        }
+
+        // Ajouter les écouteurs d'événements
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', (e) => moveBubble(e.target));
+        });
+
+        navContainer.addEventListener('mouseleave', () => moveBubble(null));
+
+
+        // 2. LOGIQUE DU CURSEUR PERSONNALISÉ
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        // Suivre la souris
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Le point suit instantanément
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Le cercle suit avec un léger délai (animation CSS handle le reste)
+            // On utilise animate pour plus de fluidité sans lag JS
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Effet Hover sur les éléments interactifs
+        const interactiveElements = document.querySelectorAll('a, button, input, textarea, .portfolio-card, .service-card');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                document.body.classList.add('hover-active');
+            });
+            el.addEventListener('mouseleave', () => {
+                document.body.classList.remove('hover-active');
+            });
+        });
+
+
+        // 3. LOGIQUE EXISTANTE (Menu Mobile, Scroll, etc.)
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const burgerIcon = mobileMenuButton.querySelector('.burger-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            burgerIcon.classList.toggle('open');
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                burgerIcon.classList.remove('open');
+            });
+        });
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg', 'bg-white');
+                navbar.classList.remove('shadow-md');
+            } else {
+                navbar.classList.add('shadow-md');
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navbarHeight = document.getElementById('navbar').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
