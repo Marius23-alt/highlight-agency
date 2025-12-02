@@ -569,15 +569,15 @@
                 </p>
 
                 <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
-                    <button class="filter-btn active">Tout voir</button>
-                    <button class="filter-btn">Identité Visuelle</button>
-                    <button class="filter-btn">Site Web</button>
-                    <button class="filter-btn">Social Media</button>
+                    <button class="filter-btn active" data-filter="all">Tout voir</button>
+                    <button class="filter-btn" data-filter="identite">Identité Visuelle</button>
+                    <button class="filter-btn" data-filter="web">Site Web</button>
+                    <button class="filter-btn" data-filter="social-media">Social Media</button>
                 </div>
             </div>
 
             <div class="portfolio-grid">
-                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="200">
+                <div class="portfolio-card group portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="200">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Boutique Mode Minimaliste" class="portfolio-image">
                         <div class="portfolio-overlay">
@@ -599,7 +599,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="300">
+                <div class="portfolio-card group portfolio-item" data-category="identite" data-aos="fade-up" data-aos-delay="300">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1599690184518-a6e5b47a1106?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Branding Cosmétique" class="portfolio-image">
                         <div class="portfolio-overlay">
@@ -621,7 +621,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="400">
+                <div class="portfolio-card group portfolio-item" data-category="social-media" data-aos="fade-up" data-aos-delay="400">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Social Media Lifestyle" class="portfolio-image">
                         <div class="portfolio-overlay">
@@ -643,7 +643,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="500">
+                <div class="portfolio-card group portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="500">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="App Mobile" class="portfolio-image">
                         <div class="portfolio-overlay">
@@ -665,7 +665,7 @@
                     </div>
                 </div>
 
-                 <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="600">
+                 <div class="portfolio-card group portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="600">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="SEO Dashboard" class="portfolio-image">
                         <div class="portfolio-overlay">
@@ -687,7 +687,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card group" data-aos="fade-up" data-aos-delay="700">
+                <div class="portfolio-card group portfolio-item" data-category="social-media" data-aos="fade-up" data-aos-delay="700">
                     <div class="portfolio-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Production Vidéo" class="portfolio-image">
                         <div class="portfolio-overlay">
@@ -803,6 +803,10 @@
                         <div>
                             <label for="message" class="block text-sm font-medium text-gray-500 mb-1 uppercase tracking-wide">Message</label>
                             <textarea id="message" name="message" rows="4" class="contact-input resize-none" placeholder="Dites-nous en plus sur votre projet..." required></textarea>
+                        </div>
+                        
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                            <input type="text" name="honeypot" id="honeypot" tabindex="-1" autocomplete="off">
                         </div>
                         <div>
                             <button type="submit" class="btn-highlight w-full py-4 text-lg">Envoyer ma demande</button>
@@ -945,10 +949,7 @@
         });
 
 
-        /* ... (Code AOS, Cursor, Navigation...) ... */
-
         // 3. LOGIQUE D'ENVOI DU FORMULAIRE (EmailJS)
-        // CLÉS MISES À JOUR :
         const SERVICE_ID = "service_ehjloc7";
         const TEMPLATE_ID = "template_twibn1o";
         const PUBLIC_KEY = "jW4azcmjTBFobUnZH"; 
@@ -964,6 +965,15 @@
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+
+            // NOUVEAU : VÉRIFICATION HONEYPOT (Anti-spam)
+            const honeypotField = document.getElementById('honeypot');
+            if (honeypotField && honeypotField.value.length > 0) {
+                // Si le champ caché est rempli, c'est un bot. On annule l'envoi en silence.
+                console.log("Tentative de spam bloquée.");
+                return; 
+            }
+            // FIN VÉRIFICATION HONEYPOT
 
             // Stocker le texte original du bouton
             const originalText = submitButton.textContent;
@@ -995,7 +1005,7 @@
 
                 }, function(error) {
                     // Erreur
-                    console.log('Échec de l\'envoi...', error);
+                    console.log('ERREUR SERVEUR EMAILJS : Statut:', error.status, 'Texte:', error.text, error);
                     submitButton.textContent = 'Erreur lors de l\'envoi ❌';
                     
                     // Gestion du style pour l'erreur (utiliser Tailwind)
@@ -1013,7 +1023,7 @@
                 });
         });
 
-/* ... (Reste du code Menu Mobile, Scroll...) ... */
+
         // 4. LOGIQUE EXISTANTE (Menu Mobile, Scroll, etc.)
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const burgerIcon = mobileMenuButton.querySelector('.burger-icon');
@@ -1058,6 +1068,38 @@
                         behavior: 'smooth'
                     });
                 }
+            });
+        });
+
+        // 5. LOGIQUE DE FILTRAGE DU PORTFOLIO (NOUVEAU)
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        const activeClass = 'active';
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 1. Mise à jour du bouton actif
+                filterButtons.forEach(btn => btn.classList.remove(activeClass));
+                this.classList.add(activeClass);
+
+                const filterValue = this.getAttribute('data-filter');
+
+                // 2. Filtrage des éléments
+                portfolioItems.forEach(item => {
+                    // Afficher tous les éléments par défaut
+                    item.style.display = 'block';
+
+                    if (filterValue === 'all') {
+                        return;
+                    }
+
+                    const itemCategory = item.getAttribute('data-category');
+                    
+                    // Masquer si la catégorie ne correspond pas
+                    if (itemCategory !== filterValue) {
+                        item.style.display = 'none'; 
+                    }
+                });
             });
         });
     </script>
