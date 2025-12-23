@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlight Agency - Communication & Stratégie à Toulouse</title>
+    <!-- Utilisation de Tailwind CSS et des polices Poppins/Inter -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;600&display=swap" rel="stylesheet">
+    <!-- Librairie AOS pour les animations au scroll -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        /* Ajoutez ce bloc dans votre balise <style> de index.html */
+        /* Empêche le défilement horizontal et définit les polices */
         html, body {
-            /* Utiliser !important est souvent nécessaire pour écraser les comportements par défaut du navigateur */
             overflow-x: hidden !important;
         }
-        /* Configuration des polices */
         body {
             font-family: 'Inter', sans-serif;
-            /* Cacher le curseur par défaut sur desktop pour laisser place au custom cursor */
-            cursor: none;
+            cursor: none; /* Curseur personnalisé activé par défaut */
         }
-        /* Rétablir le curseur sur mobile/tablette où le touch prévaut */
+        /* Rétablir le curseur par défaut sur mobile/tablette */
         @media (max-width: 1024px) {
             body { cursor: auto; }
         }
@@ -28,12 +27,12 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Définition des couleurs personnalisées basées sur le logo */
+        /* Définition des couleurs personnalisées (Ajustées pour un Rose plus Pastel) */
         :root {
-            --primary-color: #ff85a1; /* Rose principal (inspiré du logo) */
-            --primary-dark: #e65a7c; /* Rose plus foncé pour le texte/survol */
-            --secondary-color: #ffc2d1; /* Rose très pâle pour les dégradés */
-            --dark-color: #2d3748; /* Gris anthracite doux pour le texte */
+            --primary-color: #ff9abf; /* Rose principal (plus pastel) */
+            --primary-dark: #e07fa6; /* Rose plus foncé ajusté */
+            --secondary-color: #ffdeee; /* Rose très pâle ajusté */
+            --dark-color: #2d3748; /* Gris anthracite doux */
             --light-color: #fff0f3; /* Fond légèrement rosé très pâle */
             --white: #ffffff;
         }
@@ -43,7 +42,7 @@
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         }
         .text-gradient-highlight {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -55,16 +54,17 @@
             font-weight: 600;
             padding: 0.75rem 2rem;
             border-radius: 9999px;
-            box-shadow: 0 4px 14px 0 rgba(255, 133, 161, 0.39);
+            /* Utilisation des nouvelles variables pour l'ombre */
+            box-shadow: 0 4px 14px 0 rgba(255, 154, 191, 0.5); 
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            cursor: none; /* Important pour le custom cursor */
+            cursor: none;
         }
         .btn-highlight:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 133, 161, 0.23);
+            box-shadow: 0 6px 20px rgba(255, 154, 191, 0.3);
         }
         
         .btn-highlight-outline {
@@ -75,16 +75,11 @@
             border-radius: 9999px;
             background: transparent;
             transition: all 0.3s ease;
-            cursor: none; /* Important pour le custom cursor */
+            cursor: none;
         }
         .btn-highlight-outline:hover {
             background: var(--primary-color);
             color: white;
-        }
-
-        /* Animations de section */
-        .section-transition {
-            @apply transition-all duration-500 ease-in-out;
         }
 
         /* Effets de survol pour les cartes de service */
@@ -93,7 +88,8 @@
             cursor: none;
         }
         .service-icon {
-            @apply text-5xl mb-6 text-pink-400 transition duration-300 ease-in-out;
+            /* Ajustement pour utiliser la nouvelle couleur primary-color */
+            @apply text-pink-400 transition duration-300 ease-in-out;
         }
         .service-card:hover .service-icon {
             @apply text-pink-600 transform scale-110;
@@ -106,6 +102,7 @@
             gap: 2rem;
         }
         
+        /* Rendre la carte cliquable comme un bouton */
         .portfolio-card {
             position: relative;
             border-radius: 1rem;
@@ -113,12 +110,13 @@
             background: white;
             box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: none;
+            cursor: pointer; /* Curseur d'interaction */
         }
         
         .portfolio-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px -10px rgba(255, 133, 161, 0.3);
+            /* Utilisation des nouvelles variables pour l'ombre */
+            box-shadow: 0 20px 40px -10px rgba(255, 154, 191, 0.3);
         }
 
         .portfolio-image-wrapper {
@@ -141,21 +139,11 @@
             transform: scale(1.1);
         }
 
+        /* Retirer l'overlay au survol car le clic ouvre la modale */
         .portfolio-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            display: flex;
-            align-items: flex-end;
-            padding: 1.5rem;
+            display: none;
         }
         
-        .portfolio-card:hover .portfolio-overlay {
-            opacity: 1;
-        }
-
         .portfolio-content {
             position: relative;
             z-index: 10;
@@ -195,27 +183,23 @@
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
-            box-shadow: 0 4px 10px rgba(255, 133, 161, 0.3);
+            box-shadow: 0 4px 10px rgba(255, 154, 191, 0.3);
         }
 
         /* Styles Équipe & Formulaire */
-        /* Styles Équipe */
         .team-member { 
             @apply text-center; 
         }
 
         .team-photo {
-            /* Ajout des dimensions explicites pour garantir la taille (légèrement agrandie à 320px) */
+            /* Dimensions explicites pour garantir la taille et l'aspect carré */
             width: 320px;
             height: 320px;
-            object-fit: cover; /* Maintient l'aspect ratio et recadre l'image dans l'espace */
-
-            /* Les autres utilitaires Tailwind sont conservés */
+            object-fit: cover; 
             @apply rounded-full mx-auto mb-4 border-4 border-white shadow-lg transition duration-300 ease-in-out aspect-square;
         }
 
         .team-member:hover .team-photo {
-            /* Conserver l'effet de survol d'origine */
             border-color: var(--primary-color);
             @apply transform scale-105;
         }
@@ -245,17 +229,15 @@
             transform: translate(-50%, -50%);
             border-radius: 50%;
             z-index: 9999;
-            pointer-events: none; /* Le curseur ne doit pas bloquer les clics */
+            pointer-events: none;
         }
         
-        /* Le point central */
         .cursor-dot {
             width: 8px;
             height: 8px;
             background-color: var(--primary-color);
         }
         
-        /* Le cercle autour */
         .cursor-outline {
             width: 40px;
             height: 40px;
@@ -263,11 +245,12 @@
             transition: width 0.2s, height 0.2s, background-color 0.2s;
         }
         
-        /* État "Hover" du curseur (quand on survole un lien/bouton) */
+        /* État "Hover" du curseur */
         body.hover-active .cursor-outline {
             width: 60px;
             height: 60px;
-            background-color: rgba(255, 133, 161, 0.1);
+            /* Utilisation d'un alpha sur la nouvelle couleur primaire */
+            background-color: rgba(255, 154, 191, 0.15); 
             border-color: transparent;
             mix-blend-mode: multiply;
         }
@@ -283,11 +266,11 @@
         #nav-bubble {
             position: absolute;
             height: 100%;
-            background-color: #fff0f3; /* light-color */
+            background-color: var(--light-color); 
             border-radius: 9999px;
-            z-index: -1; /* Derrière le texte */
+            z-index: -1;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            opacity: 0; /* Caché par défaut */
+            opacity: 0;
             pointer-events: none;
         }
         
@@ -295,7 +278,7 @@
         .nav-item {
             position: relative;
             z-index: 10;
-            cursor: none; /* Pour le custom cursor */
+            cursor: none;
         }
 
         /* Animation Menu Mobile */
@@ -346,6 +329,93 @@
             transform: rotate(-135deg);
             background: var(--primary-color);
         }
+
+        /* Styles de la Modale */
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Styles pour les Témoignages */
+        .testimonial-card {
+            @apply bg-white p-6 md:p-8 rounded-xl shadow-lg border border-pink-50 transform transition duration-500 ease-out;
+        }
+        .testimonial-card:hover {
+            @apply shadow-2xl transform scale-[1.02];
+        }
+
+        /* Styles pour le bouton Scroll-to-Top */
+        #scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 40;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        #scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Style du bouton de volume dans la modale */
+        /* Container du contrôle de volume */
+        .volume-wrapper {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 99px;
+            padding: 10px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 44px; /* État fermé */
+            height: 44px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* Déploiement au survol */
+        .volume-wrapper:hover {
+            width: 160px; /* État déplié */
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .volume-wrapper svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* Style du curseur (input range) */
+        .volume-slider {
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+            cursor: pointer;
+            accent-color: #ff9abf; /* Ton rose principal */
+        }
+
+        .volume-wrapper:hover .volume-slider {
+            width: 80px;
+            opacity: 1;
+        }
+
+        .volume-control:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        .volume-control svg {
+            width: 20px;
+            height: 20px;
+        }
     </style>
     <script>
         // Configuration de Tailwind
@@ -353,8 +423,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#ff85a1',
-                        secondary: '#ffc2d1',
+                        // Utilisation des nouvelles valeurs pastel
+                        primary: '#ff9abf', 
+                        secondary: '#ffdeee',
                         dark: '#2d3748',
                         light: '#fff0f3',
                     },
@@ -366,24 +437,52 @@
             }
         }
     </script>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.28/build/spline-viewer.js"></script>
+
+    <style>
+        /* Barre de progression de lecture */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(to right, #ff9abf, #e07fa6);
+            z-index: 100;
+        }
+
+        /* Effet de flou sur verre (Glassmorphism) */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.6) !important;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
 </head>
 <body class="bg-white text-dark overflow-x-hidden">
+    <div id="scroll-progress"></div>
 
+    <!-- CURSEUR PERSONNALISÉ (uniquement Desktop) -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
+    <!-- BARRE DE NAVIGATION FIXE -->
     <nav class="bg-white/90 backdrop-blur-md shadow-sm fixed w-full z-50 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-24">
                 <div class="flex-shrink-0 flex items-center group cursor-pointer">
+                    <!-- Logo stylisé -->
                     <div class="relative w-12 h-12 mr-3 transition-transform duration-300 group-hover:scale-105">
                         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="5" y="5" width="90" height="90" rx="15" stroke="#ff85a1" stroke-width="6" fill="white"/>
-                            <path d="M35 40 L65 30 V60 L35 50 V40 Z" stroke="#ff85a1" stroke-width="5" stroke-linejoin="round"/>
-                            <circle cx="35" cy="45" r="8" stroke="#ff85a1" stroke-width="5"/>
-                            <path d="M35 55 L25 75 M35 55 L45 75" stroke="#ff85a1" stroke-width="5" stroke-linecap="round"/>
-                            <path d="M75 25 L78 18 L81 25 L88 28 L81 31 L78 38 L75 31 L68 28 Z" fill="#ff85a1"/>
-                            <path d="M85 45 L87 40 L89 45 L94 47 L89 49 L87 54 L85 49 L80 47 Z" fill="#ff85a1"/>
+                            <!-- Fond du logo -->
+                            <rect x="5" y="5" width="90" height="90" rx="15" stroke="#ff9abf" stroke-width="6" fill="white"/>
+                            <!-- Forme abstraite (Inspiration "Highlight") -->
+                            <path d="M35 40 L65 30 V60 L35 50 V40 Z" stroke="#ff9abf" stroke-width="5" stroke-linejoin="round"/>
+                            <circle cx="35" cy="45" r="8" stroke="#ff9abf" stroke-width="5"/>
+                            <path d="M35 55 L25 75 M35 55 L45 75" stroke="#ff9abf" stroke-width="5" stroke-linecap="round"/>
+                            <!-- Étoiles/Éclairs -->
+                            <path d="M75 25 L78 18 L81 25 L88 28 L81 31 L78 38 L75 31 L68 28 Z" fill="#ff9abf"/>
+                            <path d="M85 45 L87 40 L89 45 L94 47 L89 49 L87 54 L85 49 L80 47 Z" fill="#ff9abf"/>
                         </svg>
                     </div>
                     <div class="flex flex-col">
@@ -392,6 +491,7 @@
                     </div>
                 </div>
                 
+                <!-- Menu Desktop -->
                 <div class="hidden md:flex items-center space-x-2 relative" id="desktop-menu-container">
                     <div id="nav-bubble"></div>
 
@@ -399,9 +499,12 @@
                     <a href="#about" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">À propos</a>
                     <a href="#services" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Services</a>
                     <a href="#portfolio" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Réalisations</a>
+                    <a href="#testimonials" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Avis</a>
+                    <a href="#team" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">L'Équipe</a>
                     <a href="#contact" class="btn-highlight shadow-pink-200 ml-4">Contactez-nous</a>
                 </div>
 
+                <!-- Bouton Menu Mobile -->
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="focus:outline-none p-2">
                         <div class="burger-icon">
@@ -413,12 +516,14 @@
                 </div>
             </div>
         </div>
+        <!-- Menu Mobile défilant -->
         <div class="md:hidden bg-white shadow-lg" id="mobile-menu">
             <div class="px-2 pt-2 pb-5 space-y-1 sm:px-3">
                 <a href="#home" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Accueil</a>
                 <a href="#about" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">À propos</a>
                 <a href="#services" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Services</a>
                 <a href="#portfolio" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Réalisations</a>
+                <a href="#testimonials" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Avis</a>
                 <a href="#team" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">L'Équipe</a>
                 <a href="#contact" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Contact</a>
                 <a href="#contact" class="block w-full text-center btn-highlight mt-4">Démarrer un projet</a>
@@ -426,37 +531,34 @@
         </div>
     </nav>
 
-    <header id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-white relative overflow-hidden min-h-[85vh] flex items-center">
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-            <div class="absolute -top-40 -right-40 w-96 h-96 bg-pink-100 opacity-50 rounded-full filter blur-3xl animate-pulse"></div>
-            <div class="absolute bottom-0 left-20 w-80 h-80 bg-pink-50 opacity-60 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
-            <div class="absolute top-40 left-10 w-20 h-20 bg-pink-200 opacity-30 rounded-full filter blur-xl"></div>
+    <!-- SECTION 1: HÉRO (Accueil) -->
+    <header id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-white relative overflow-hidden min-h-[95vh] flex items-center">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <spline-viewer url="https://prod.spline.design/6Wq1Q7nEie3998iR/scene.splinecode"></spline-viewer>
         </div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div class="text-center">
-                <div class="inline-block px-4 py-1 rounded-full bg-pink-50 text-pink-500 text-sm font-semibold mb-6 tracking-wide uppercase shadow-sm border border-pink-100" data-aos="fade-down">
-                    Création Digitale & Stratégie Sur Mesure
+                <div class="inline-block px-4 py-1 rounded-full glass-effect text-pink-500 text-sm font-semibold mb-6 tracking-wide uppercase shadow-sm border border-pink-100" data-aos="fade-down">
+                    Création Digitale & Stratégie 3D
                 </div>
                 <h1 class="text-5xl md:text-7xl font-bold text-dark mb-8 leading-tight tracking-tight" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                    Faisons briller votre image : <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-pink-600">Donnons du sens à ta vision</span>
+                    Faisons briller votre image : <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-pink-600">L'immersion au service de ta vision</span>
                 </h1>
-                <p class="text-xl text-gray-500 mb-10 max-w-2xl mx-auto font-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-                    Highlight Agency est ton partenaire de communication à <span class="font-medium text-dark">Toulouse</span>. Nous concevons une identité et un contenu digital qui maximisent ton impact.
+                <p class="text-xl text-gray-500 mb-10 max-w-2xl mx-auto font-light glass-effect p-4 rounded-xl" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                    Highlight Agency est ton partenaire à <span class="font-medium text-dark">Toulouse</span>. Nous concevons des identités qui captent l'attention.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
                     <a href="#contact" class="btn-highlight text-lg px-10">Démarrer un projet</a>
-                    <a href="#portfolio" class="btn-highlight-outline text-lg px-10">Voir le portfolio</a>
+                    <a href="#portfolio" class="btn-highlight-outline text-lg px-10 glass-effect">Voir le portfolio</a>
                 </div>
             </div>
         </div>
-        <div class="absolute bottom-0 w-full">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="text-gray-50 fill-current">
-                <path fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-            </svg>
-        </div>
     </header>
 
+    <!-- SECTION 2: À PROPOS -->
     <section id="about" class="py-24 bg-gray-50 relative overflow-hidden">
+        <!-- Image de fond floutée -->
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1549721759-42b785d0d869?ixlib=rb-1.2.1&auto=format&fit=crop&w=1800&q=80" 
                  alt="Ville de Toulouse en arrière-plan" 
@@ -469,12 +571,18 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                 
+                <!-- Bloc Image (Mockup) -->
                 <div class="relative w-full h-full min-h-[400px]" data-aos="fade-right" data-aos-duration="1000">
                      <div class="absolute inset-0 flex items-center justify-center">
-                         <img src="./images/Toulouse.jpg" alt="Mockup Branding Highlight Agency" class="relative rounded-2xl shadow-xl w-full h-auto object-cover max-w-lg z-10 border-4 border-white transform rotate-3 hover:rotate-0 transition duration-500">
+                         <!-- Rétablissement du chemin local -->
+                         <img src="./images/Toulouse.jpg" 
+                             alt="Mockup Branding Highlight Agency" 
+                             class="relative rounded-2xl shadow-xl w-full h-auto object-cover max-w-lg z-10 border-4 border-white transform rotate-3 hover:rotate-0 transition duration-500"
+                             onerror="this.onerror=null; this.src='https://placehold.co/600x450/ffb7c5/2d3748?text=Mockup+Branding+Highlight';">
                     </div>
                 </div>
 
+                <!-- Bloc Texte -->
                 <div data-aos="fade-left" data-aos-duration="1000">
                     <h2 class="text-3xl md:text-4xl font-bold text-dark mb-6">L'agence qui <span class="text-pink-500">met en lumière</span> votre talent</h2>
                     <p class="text-lg text-gray-600 mb-6 font-light">
@@ -507,7 +615,11 @@
         </div>
     </section>
 
+    <!-- SECTION 3: SERVICES -->
     <section id="services" class="py-24 bg-white">
+        <div class="absolute left-0 w-64 h-64 opacity-60 pointer-events-none hidden lg:block transform -translate-x-20">
+            <spline-viewer url="https://prod.spline.design/K66136-EIk377U-H/scene.splinecode"></spline-viewer>
+        </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="1000">
                 <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Notre Expertise Sur Mesure</h2>
@@ -517,6 +629,7 @@
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Carte Service 1 -->
                 <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="100">
                     <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -526,6 +639,7 @@
                     <h3 class="text-xl font-bold text-dark mb-3 font-heading">Stratégie 🎯</h3>
                     <p class="text-gray-500 text-sm leading-relaxed">Stratégie sur mesure : Plan d'action précis pour atteindre vos objectifs.</p>
                 </div>
+                <!-- Carte Service 2 -->
                 <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="200">
                     <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -535,6 +649,7 @@
                     <h3 class="text-xl font-bold text-dark mb-3 font-heading">Identité Visuelle</h3>
                     <p class="text-gray-500 text-sm leading-relaxed">Branding qui donne du sens et fait briller ton image.</p>
                 </div>
+                <!-- Carte Service 3 -->
                 <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="300">
                     <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -544,6 +659,7 @@
                     <h3 class="text-xl font-bold text-dark mb-3 font-heading">Création Digitale</h3>
                     <p class="text-gray-500 text-sm leading-relaxed">Sites web et applications conçus pour ta vision et tes utilisateurs.</p>
                 </div>
+                <!-- Carte Service 4 -->
                 <div class="service-card text-center group" data-aos="fade-up" data-aos-delay="400">
                     <div class="service-icon group-hover:bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -557,7 +673,9 @@
         </div>
     </section>
 
-    <section id="portfolio" class="py-24 bg-white relative overflow-x-hidden">
+    <!-- SECTION 4: PORTFOLIO (Réalisations) -->
+    <section id="portfolio" class="py-24 bg-white relative">
+        <!-- Décoration en arrière-plan -->
         <div class="absolute top-0 right-0 w-1/3 h-full bg-pink-50 skew-x-12 opacity-50 pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -568,6 +686,7 @@
                     Chaque projet est une nouvelle aventure. Découvrez comment nous avons aidé nos clients à se démarquer.
                 </p>
 
+                <!-- Boutons de filtrage -->
                 <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
                     <button class="filter-btn active" data-filter="all">Tout voir</button>
                     <button class="filter-btn" data-filter="identite">Identité Visuelle</button>
@@ -576,146 +695,219 @@
                 </div>
             </div>
 
+            <!-- Grille de Projets -->
             <div class="portfolio-grid">
-                <div class="portfolio-card group portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="200">
-                    <div class="portfolio-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Boutique Mode Minimaliste" class="portfolio-image">
-                        <div class="portfolio-overlay">
-                            <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="portfolio-content">
-                        <span class="portfolio-tag">E-commerce</span>
-                        <h3 class="text-xl font-bold text-dark mb-2 font-heading">Maison Coton</h3>
-                        <p class="text-gray-500 text-sm line-clamp-2">Refonte complète de l'expérience d'achat pour une marque de prêt-à-porter éthique.</p>
-                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
-                            Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </a>
-                    </div>
+                <!-- Projet 1: KOMPO HEALTHY FOOD -->
+                <div class="portfolio-card group portfolio-item" 
+                data-category="social-media" 
+                data-aos="fade-up" 
+                data-aos-delay="200"
+                data-title="Kompo Healthy Food : Brand Content Vidéo"
+                data-tags="Vidéo, Food Styling, Réseaux Sociaux, Contenu"
+                data-full-description="Création de contenus vidéos immersifs pour le compte Instagram de Kompo Healthy Food. Notre mission a été de capturer le dynamisme et la fraîcheur de leurs plats sains à travers des formats courts et percutants, optimisés pour un engagement maximal sur les plateformes sociales."
+                data-gallery="./images/kompo.jpg, ./images/kompo_video.mp4"
+                onclick="openModal(this)">
+                <div class="portfolio-image-wrapper">
+                    <img src="./images/kompo.jpg" alt="Kompo Healthy Food" class="portfolio-image">
                 </div>
 
-                <div class="portfolio-card group portfolio-item" data-category="identite" data-aos="fade-up" data-aos-delay="300">
+                <div class="portfolio-content">
+                    <span class="portfolio-tag">Vidéo</span>
+                    <h3 class="text-xl font-bold text-dark mb-2 font-heading">Kompo Healthy Food</h3>
+                    <p class="text-gray-500 text-sm line-clamp-2">Création de contenus vidéos percutants et gourmands pour les réseaux sociaux de Kompo.</p>
+                    <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700 pointer-events-none">
+                        Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+
+                <!-- Projet 2: Branding (Identité) -->
+                <div class="portfolio-card group portfolio-item"
+                    data-category="identite"
+                    data-aos="fade-up"
+                    data-aos-delay="300"
+                    data-title="Lumière Bio : Identité Visuelle Naturelle"
+                    data-tags="Branding, Design Graphique, Packaging"
+                    data-full-description="Création de l'identité visuelle complète pour 'Lumière Bio', une nouvelle gamme de cosmétiques naturels. Cela incluait le logo, la palette de couleurs, la typographie, et le design du packaging. Le concept était d'évoquer la pureté et la douceur, en utilisant des tons pastels et des formes organiques pour se démarquer sur un marché concurrentiel."
+                    data-image="./images/Lumiere_Bio.jpg"
+                    onclick="openModal(this)">
                     <div class="portfolio-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1599690184518-a6e5b47a1106?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Branding Cosmétique" class="portfolio-image">
-                        <div class="portfolio-overlay">
-                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </button>
-                        </div>
+                        <!-- Rétablissement du chemin local -->
+                        <img src="./images/Lumiere_Bio.jpg" alt="Branding Cosmétique" class="portfolio-image" onerror="this.onerror=null; this.src='https://placehold.co/800x600/ffb7c5/2d3748?text=Lumière+Bio+Branding';">
                     </div>
                     <div class="portfolio-content">
-                        <span class="portfolio-tag">Identité Visuelle</span>
+                        <span class="portfolio-tag">Branding</span>
                         <h3 class="text-xl font-bold text-dark mb-2 font-heading">Lumière Bio</h3>
                         <p class="text-gray-500 text-sm line-clamp-2">Création d'une identité fraîche et naturelle pour une gamme de cosmétiques bio.</p>
-                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700 pointer-events-none">
                             Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </a>
                     </div>
                 </div>
 
-                <div class="portfolio-card group portfolio-item" data-category="social-media" data-aos="fade-up" data-aos-delay="400">
+                <!-- Projet 3: Social Media -->
+                <div class="portfolio-card group portfolio-item"
+                    data-category="social-media"
+                    data-aos="fade-up"
+                    data-aos-delay="400"
+                    data-title="Café des Artistes : Stratégie Instagram"
+                    data-tags="Réseaux Sociaux, Content Marketing, Vidéo"
+                    data-full-description="Mise en place d'une stratégie de contenu Instagram complète pour un lieu culturel toulousain. L'objectif était d'augmenter l'engagement et d'attirer une clientèle plus jeune. Nous avons produit une série de courtes vidéos engageantes et des carrousels graphiques, augmentant leur portée organique de 40% en 3 mois."
+                    data-image="./images/kompo_video.mp4"
+                    onclick="openModal(this)">
                     <div class="portfolio-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Social Media Lifestyle" class="portfolio-image">
-                        <div class="portfolio-overlay">
-                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </button>
-                        </div>
+                        <!-- Rétablissement du chemin local -->
+                        <img src="./images/Cafe_Artistes.jpg" alt="Social Media Lifestyle" class="portfolio-image" onerror="this.onerror=null; this.src='https://placehold.co/800x600/ffb7c5/2d3748?text=Café+des+Artistes+SM';">
                     </div>
                     <div class="portfolio-content">
-                        <span class="portfolio-tag">Social Media</span>
+                        <span class="portfolio-tag">Réseaux Sociaux</span>
                         <h3 class="text-xl font-bold text-dark mb-2 font-heading">Café des Artistes</h3>
                         <p class="text-gray-500 text-sm line-clamp-2">Stratégie Instagram et création de contenu vidéo pour un lieu culturel toulousain.</p>
-                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700 pointer-events-none">
                             Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </a>
                     </div>
                 </div>
 
-                <div class="portfolio-card group portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="500">
+                <!-- Projet 4: App Mobile (Web) -->
+                <div class="portfolio-card group portfolio-item"
+                    data-category="web"
+                    data-aos="fade-up"
+                    data-aos-delay="500"
+                    data-title="Guide Toulouse : Application Mobile UX"
+                    data-tags="UI/UX Design, Application Mobile, Prototypage"
+                    data-full-description="Conception de l'expérience utilisateur (UX) et de l'interface utilisateur (UI) d'une application mobile pour les touristes à Toulouse. Le défi était de simplifier la recherche d'activités et de fournir des itinéraires personnalisés. Nous avons développé des wireframes, des prototypes cliquables et le design final des écrans."
+                    data-image="./images/kompo_video.mp4"
+                    onclick="openModal(this)">
                     <div class="portfolio-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="App Mobile" class="portfolio-image">
-                        <div class="portfolio-overlay">
-                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </button>
-                        </div>
+                        <!-- Rétablissement du chemin local -->
+                        <img src="./images/Guide_Toulouse.jpg" alt="App Mobile" class="portfolio-image" onerror="this.onerror=null; this.src='https://placehold.co/800x600/ffb7c5/2d3748?text=Guide+Toulouse+App';">
                     </div>
                     <div class="portfolio-content">
-                        <span class="portfolio-tag">UI/UX Design</span>
-                        <h3 class="text-xl font-bold text-dark mb-2 font-heading">Guide Toulouse</h3>
+<span class="portfolio-tag">UI/UX Design</span>
+<h3 class="text-xl font-bold text-dark mb-2 font-heading">Guide Toulouse</h3>
                         <p class="text-gray-500 text-sm line-clamp-2">Conception d'une application touristique intuitive pour découvrir la ville rose.</p>
-                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700 pointer-events-none">
                             Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </a>
                     </div>
                 </div>
 
-                 <div class="portfolio-card group portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="600">
+                 <!-- Projet 5: SEO (Web) -->
+                 <div class="portfolio-card group portfolio-item"
+                    data-category="web"
+                    data-aos="fade-up"
+                    data-aos-delay="600"
+                    data-title="StartUp Connect : Augmentation de Trafic SEO"
+                    data-tags="SEO, Référencement Naturel, Audit Technique"
+                    data-full-description="Mission d'optimisation du référencement naturel (SEO) pour une plateforme de mise en relation de startups. Après un audit technique et sémantique complet, nous avons implémenté des corrections de structure et une stratégie de contenu ciblée, ce qui a mené à une augmentation de 150% du trafic organique qualifié en 6 mois."
+                    data-image="./images/kompo_video.mp4"
+                    onclick="openModal(this)">
                     <div class="portfolio-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="SEO Dashboard" class="portfolio-image">
-                        <div class="portfolio-overlay">
-                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </button>
-                        </div>
+                        <!-- Rétablissement du chemin local -->
+                        <img src="./images/StartUp_Connect.jpg" alt="SEO Dashboard" class="portfolio-image" onerror="this.onerror=null; this.src='https://placehold.co/800x600/ffb7c5/2d3748?text=Startup+Connect+SEO';">
                     </div>
                     <div class="portfolio-content">
-                        <span class="portfolio-tag">SEO & Trafic</span>
-                        <h3 class="text-xl font-bold text-dark mb-2 font-heading">StartUp Connect</h3>
+<span class="portfolio-tag">SEO</span>
+<h3 class="text-xl font-bold text-dark mb-2 font-heading">StartUp Connect</h3>
                         <p class="text-gray-500 text-sm line-clamp-2">Optimisation SEO technique et augmentation du trafic organique de 150%.</p>
-                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700 pointer-events-none">
                             Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </a>
                     </div>
                 </div>
 
-                <div class="portfolio-card group portfolio-item" data-category="social-media" data-aos="fade-up" data-aos-delay="700">
+                <!-- Projet 6: Production Vidéo (Social Media) -->
+                <div class="portfolio-card group portfolio-item"
+                    data-category="social-media"
+                    data-aos="fade-up"
+                    data-aos-delay="700"
+                    data-title="Event Corp : Film Institutionnel Moderne"
+                    data-tags="Production Vidéo, Motion Design, Événementiel"
+                    data-full-description="Réalisation complète d'un film institutionnel destiné à promouvoir l'événement annuel d'Event Corp auprès de ses partenaires. Le projet incluait le storyboarding, le tournage et le montage avec ajout de motion design dynamique. Le film a été utilisé lors de la convention et a reçu un excellent retour de la part des participants."
+                    data-image="./images/kompo_video.mp4"
+                    onclick="openModal(this)">
                     <div class="portfolio-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Production Vidéo" class="portfolio-image">
-                        <div class="portfolio-overlay">
-                             <button class="bg-white text-pink-500 rounded-full w-12 h-12 flex items-center justify-center hover:scale-110 transition shadow-lg mx-auto mb-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </button>
-                        </div>
+                        <!-- Rétablissement du chemin local -->
+                        <img src="./images/Event_Corp.jpg" alt="Production Vidéo" class="portfolio-image" onerror="this.onerror=null; this.src='https://placehold.co/800x600/ffb7c5/2d3748?text=Event+Corp+Vidéo';">
                     </div>
                     <div class="portfolio-content">
                         <span class="portfolio-tag">Production Vidéo</span>
                         <h3 class="text-xl font-bold text-dark mb-2 font-heading">Event Corp</h3>
                         <p class="text-gray-500 text-sm line-clamp-2">Réalisation d'un film institutionnel moderne pour une convention d'entreprise.</p>
-                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700">
+                        <a href="#" class="mt-4 inline-flex items-center text-pink-500 font-semibold text-sm hover:text-pink-700 pointer-events-none">
                             Voir l'étude de cas <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </a>
                     </div>
                 </div>
 
             </div>
+            <!-- Bouton "Voir tous nos projets" -->
             <div class="text-center mt-16" data-aos="fade-up" data-aos-delay="800">
                 <a href="#contact" class="btn-highlight-outline px-8 py-3 text-lg border-2 hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-all">Découvrir tous nos projets</a>
             </div>
         </div>
     </section>
 
+    <!-- SECTION 4.5: TÉMOIGNAGES CLIENTS (NOUVEAU) -->
+    <section id="testimonials" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 rounded-full bg-pink-100 text-pink-600 text-sm font-semibold mb-3">La confiance de nos clients</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Ce qu'ils disent de nous</h2>
+                <div class="w-24 h-1 bg-pink-400 mx-auto rounded-full mb-6"></div>
+                <p class="text-xl text-gray-500 max-w-3xl mx-auto font-light">
+                    Des paroles authentiques qui témoignent de la qualité de notre collaboration et de notre impact.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Témoignage 1 -->
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <p class="text-lg italic text-gray-700 mb-6">
+                        "Highlight Agency a transformé notre présence en ligne. Leur approche stratégique, combinée à un design impeccable, a donné un sens nouveau à notre marque. Une équipe de confiance à Toulouse !"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/64x64/ff9abf/ffffff?text=C.D" alt="Client 1" class="w-12 h-12 rounded-full mr-4 object-cover border-2 border-pink-200">
+                        <div>
+                            <p class="font-bold text-dark font-heading">Clara Dupont</p>
+                            <p class="text-sm text-pink-500">Fondatrice, Lumière Bio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Témoignage 2 (Idéal pour Kompo) -->
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <p class="text-lg italic text-gray-700 mb-6">
+                        "Les photos promotionnelles pour notre Instagram sont d'une qualité exceptionnelle. Elles capturent parfaitement l'esprit sain et gourmet de Kompo. Un vrai coup de boost pour notre visibilité !"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/64x64/b8e07f/2d3748?text=L.G" alt="Client 2" class="w-12 h-12 rounded-full mr-4 object-cover border-2 border-pink-200">
+                        <div>
+                            <p class="font-bold text-dark font-heading">Lucas Girard</p>
+                            <p class="text-sm text-pink-500">Gérant, Kompo Healthy Food</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Témoignage 3 -->
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <p class="text-lg italic text-gray-700 mb-6">
+                        "Nous avions besoin d'un site à la fois beau et performant. Highlight Agency a dépassé nos attentes en livrant un produit final qui a considérablement réduit notre taux de rebond."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/64x64/ff9abf/ffffff?text=A.M" alt="Client 3" class="w-12 h-12 rounded-full mr-4 object-cover border-2 border-pink-200">
+                        <div>
+                            <p class="font-bold text-dark font-heading">Antoine Morvan</p>
+                            <p class="text-sm text-pink-500">Dir. Marketing, Event Corp</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: L'ÉQUIPE -->
     <section id="team" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
@@ -723,21 +915,26 @@
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Des experts passionnés, dédiés à votre réussite.</p>
             </div>
         <div class="flex flex-col md:flex-row md:justify-center gap-8">
+                <!-- Membre 1: Dimitri -->
                 <div class="team-member" data-aos="fade-up" data-aos-delay="100">
-                    <img src="./images/Photo_dim.JPG" alt="Membre 1" class="team-photo">
+                    <!-- Rétablissement du chemin local -->
+                    <img src="./images/Photo_dim.JPG" alt="Photo Dimitri, Fondateur" class="team-photo" onerror="this.onerror=null; this.src='https://placehold.co/320x320/ffb7c5/2d3748?text=Dimitri';">
                     <h3 class="text-xl font-bold text-dark font-heading">Dimitri</h3>
                     <p class="text-primary font-medium mb-2">Fondateur & Stratège</p>
                     <p class="text-gray-600 text-sm">Expert en stratégie digitale et développement d'entreprise.</p>
                 </div>
+                <!-- Membre 2: Erwan -->
                 <div class="team-member" data-aos="fade-up" data-aos-delay="200">
-                    <img src="./images/Dim_sandwich.jpg" alt="Membre 2" class="team-photo">
+                    <!-- Rétablissement du chemin local -->
+                    <img src="./images/Dim_sandwich.jpg" alt="Photo Erwan, Directeur adjoint" class="team-photo" onerror="this.onerror=null; this.src='https://placehold.co/320x320/ffb7c5/2d3748?text=Erwan';">
                     <h3 class="text-xl font-bold text-dark font-heading">Erwan</h3>
                     <p class="text-primary font-medium mb-2">Directeur adjoint</p>
                     <p class="text-gray-600 text-sm">Créateur passionné, il donne vie à votre identité visuelle.</p>
                 </div>
+                <!-- Membre 3: Lead Développeur (Placeholder) -->
                 <div class="team-member" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://placehold.co/160x160/ffc2d1/e65a7c?text=J.L" alt="Membre 3" class="team-photo">
-                    <h3 class="text-xl font-bold text-dark font-heading"></h3>
+                    <img src="https://placehold.co/320x320/ffc2d1/e65a7c?text=J.L" alt="Membre 3" class="team-photo">
+                    <h3 class="text-xl font-bold text-dark font-heading">Julien</h3>
                     <p class="text-primary font-medium mb-2">Lead Développeur</p>
                     <p class="text-gray-600 text-sm">Maîtrise des technologies web pour des sites performants.</p>
                 </div>
@@ -746,15 +943,18 @@
         </div>
     </section>
 
+    <!-- SECTION 6: CONTACT & FORMULAIRE -->
     <section id="contact" class="py-24 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <!-- Bloc Informations de Contact -->
                 <div data-aos="fade-right">
                     <h2 class="text-3xl md:text-4xl font-bold text-dark mb-6">Parlons de votre projet</h2>
                     <p class="text-lg text-gray-600 mb-10 font-light">
                         Prêt à faire briller votre marque ? Contactez-nous pour une consultation gratuite.
                     </p>
                     <div class="space-y-6 mb-10">
+                        <!-- Adresse -->
                         <div class="flex items-center p-4 bg-white rounded-lg shadow-sm">
                             <div class="flex-shrink-0 w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -764,6 +964,7 @@
                             </div>
                             <span class="ml-4 text-gray-700 font-medium">12 Place du Capitole, 31000 Toulouse</span>
                         </div>
+                        <!-- Téléphone -->
                         <div class="flex items-center p-4 bg-white rounded-lg shadow-sm">
                             <div class="flex-shrink-0 w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -772,6 +973,7 @@
                             </div>
                             <span class="ml-4 text-gray-700 font-medium">05 61 00 00 00</span>
                         </div>
+                        <!-- Email -->
                         <div class="flex items-center p-4 bg-white rounded-lg shadow-sm">
                             <div class="flex-shrink-0 w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -782,6 +984,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Bloc Formulaire de Contact -->
                 <div class="bg-white p-10 rounded-2xl shadow-xl border border-pink-50" data-aos="fade-left">
                     <h3 class="text-2xl font-bold text-dark mb-6 font-heading">Envoyez un message</h3>
                     <form id="contact-form" class="space-y-6">
@@ -805,6 +1008,7 @@
                             <textarea id="message" name="message" rows="4" class="contact-input resize-none" placeholder="Dites-nous en plus sur votre projet..." required></textarea>
                         </div>
                         
+                        <!-- Champ Honeypot (Anti-spam, caché) -->
                         <div style="position: absolute; left: -5000px;" aria-hidden="true">
                             <input type="text" name="honeypot" id="honeypot" tabindex="-1" autocomplete="off">
                         </div>
@@ -817,9 +1021,11 @@
         </div>
     </section>
 
+    <!-- SECTION 7: FOOTER -->
     <footer class="bg-white text-gray-800 py-16 border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Colonne Logo et Réseaux Sociaux -->
                 <div class="col-span-1 md:col-span-1">
                     <a href="#" class="flex items-center mb-6">
                         <div class="w-8 h-8 mr-2 bg-pink-500 rounded-md flex items-center justify-center">
@@ -831,11 +1037,13 @@
                         Agence de communication digitale à Toulouse. Stratégie, Design & Développement.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-pink-500 hover:text-white transition duration-300">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/kompo_healthyfood" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-pink-500 hover:text-white transition duration-300">
                             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.323 11.531a3.535 3.535 0 00-.916-2.502 3.535 3.535 0 00-2.502-.916 3.535 3.535 0 00-2.502.916 3.535 3.535 0 00-.916 2.502c0 1.85 1.505 3.355 3.355 3.355s3.355-1.505 3.355-3.355zm-1.839-4.885a1.18 1.18 0 100 2.36 1.18 1.18 0 000-2.36zM17.5 12c0 2.485-2.015 4.5-4.5 4.5s-4.5-2.015-4.5-4.5 2.015-4.5 4.5-4.5 4.5 2.015 4.5 4.5z" clip-rule="evenodd"/>
                             </svg>
                         </a>
+                        <!-- LinkedIn -->
                         <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-pink-500 hover:text-white transition duration-300">
                             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.968 0-1.75-.79-1.75-1.764s.782-1.764 1.75-1.764 1.75.79 1.75 1.764-.782 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-1.337-.025-3.057-1.857-3.057-1.857 0-2.145 1.446-2.145 2.955v5.706h-3v-11h2.89v1.33h.04c.402-.764 1.373-1.57 2.85-1.57 3.05 0 3.628 2.016 3.628 4.646v6.591h-.001z" clip-rule="evenodd"/>
@@ -843,22 +1051,26 @@
                         </a>
                     </div>
                 </div>
+                <!-- Colonne Agence -->
                 <div class="col-span-1">
                     <h3 class="text-sm font-bold text-dark uppercase tracking-wider mb-6">Agence</h3>
                     <ul class="space-y-3">
                         <li><a href="#about" class="text-gray-500 hover:text-pink-500 text-sm">À propos</a></li>
                         <li><a href="#team" class="text-gray-500 hover:text-pink-500 text-sm">L'équipe</a></li>
-                        <li><a href="#careers" class="text-gray-500 hover:text-pink-500 text-sm">Carrières</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-pink-500 text-sm">Carrières</a></li>
                     </ul>
                 </div>
+                <!-- Colonne Services -->
                 <div class="col-span-1">
                     <h3 class="text-sm font-bold text-dark uppercase tracking-wider mb-6">Services</h3>
                     <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-500 hover:text-pink-500 text-sm">Stratégie</a></li>
-                        <li><a href="#" class="text-gray-500 hover:text-pink-500 text-sm">Branding</a></li>
-                        <li><a href="#" class="text-gray-500 hover:text-pink-500 text-sm">Web</a></li>
+                        <li><a href="#services" class="text-gray-500 hover:text-pink-500 text-sm">Stratégie</a></li>
+                        <li><a href="#services" class="text-gray-500 hover:text-pink-500 text-sm">Branding</a></li>
+                        <li><a href="#services" class="text-gray-500 hover:text-pink-500 text-sm">Web</a></li>
+                        <li><a href="#services" class="text-gray-500 hover:text-pink-500 text-sm">Contenu Engagé</a></li>
                     </ul>
                 </div>
+                <!-- Colonne Légal -->
                 <div class="col-span-1">
                     <h3 class="text-sm font-bold text-dark uppercase tracking-wider mb-6">Légal</h3>
                     <ul class="space-y-3">
@@ -867,6 +1079,7 @@
                     </ul>
                 </div>
             </div>
+            <!-- Droits d'auteur -->
             <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; <span id="current-year"></span> Highlight Agency.</p>
                 <p class="text-gray-300 text-xs">Fait avec &hearts; à Toulouse</p>
@@ -874,6 +1087,66 @@
         </div>
     </footer>
 
+    <!-- MODALE DU PORTFOLIO (Ajoutée ici) -->
+    <div id="portfolio-modal" class="modal fixed inset-0 z-[100] bg-gray-900 bg-opacity-80 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300" aria-modal="true" role="dialog">
+        
+        <div class="bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-95 relative flex flex-col" id="modal-content">
+        
+        <div class="flex flex-col md:flex-row h-full flex-grow overflow-hidden">
+            
+            <div class="relative h-64 md:h-auto flex-1 bg-black flex items-center justify-center group overflow-hidden">
+                
+                <div id="media-loader" class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+                    <div class="animate-spin rounded-full h-12 w-12 border-4 border-gray-600 border-t-pink-500"></div>
+                </div>
+
+                <div id="modal-media-container" class="w-full h-full flex items-center justify-center relative z-10 transition-opacity duration-300 opacity-0">
+                    </div>
+
+                <button id="prev-btn" onclick="changeMedia(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white transition-all opacity-0 group-hover:opacity-100 z-30 backdrop-blur-sm">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button id="next-btn" onclick="changeMedia(1)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white transition-all opacity-0 group-hover:opacity-100 z-30 backdrop-blur-sm">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+
+                <div id="media-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full z-30 font-medium border border-white/10"></div>
+            </div>
+            
+            <div class="p-8 md:p-10 relative bg-white overflow-y-auto w-full md:w-[450px] flex-shrink-0 border-l border-gray-100">
+                <h2 id="modal-title" class="text-3xl font-bold text-dark mb-4 font-heading pt-6 md:pt-0">Titre</h2>
+                <div class="flex flex-wrap gap-2 mb-6" id="modal-tags"></div>
+                
+                <div class="w-16 h-1 bg-pink-400 rounded-full mb-6"></div>
+
+                <h3 class="text-xl font-semibold text-dark mb-3 font-heading">Le projet</h3>
+                <p id="modal-full-description" class="text-gray-600 leading-relaxed mb-8 text-sm md:text-base"></p>
+                
+                <a href="#contact" onclick="closeModal()" class="btn-highlight text-center block w-full">
+                    Démarrer votre projet similaire
+                </a>
+            </div>
+        </div>
+
+        <button onclick="event.stopPropagation(); closeModal()" class="absolute top-4 right-4 z-50 bg-gray-100 hover:bg-gray-200 p-2 rounded-full text-dark hover:text-pink-600 transition duration-200 shadow-sm border border-gray-200">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        
+    </div>
+    </div>
+    <!-- FIN MODALE -->
+
+    <!-- BOUTON SCROLL-TO-TOP (NOUVEAU) -->
+    <button id="scroll-to-top" onclick="scrollToTop()" class="btn-highlight w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:shadow-xl">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+    <!-- FIN BOUTON SCROLL-TO-TOP -->
+
+    <!-- Scripts Javascript -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -889,8 +1162,11 @@
         const navLinks = document.querySelectorAll('.nav-item');
 
         function moveBubble(element) {
+            // Empêche l'animation si le menu n'est pas affiché (ex: sur mobile)
+            if (window.innerWidth < 768) return; 
+
             if (!element) {
-                // Si on sort du menu, on choisit de la cacher.
+                // Cacher la bulle si on sort de la zone de navigation
                 bubble.style.opacity = '0';
                 return;
             }
@@ -929,7 +1205,6 @@
             cursorDot.style.top = `${posY}px`;
 
             // Le cercle suit avec un léger délai (animation CSS handle le reste)
-            // On utilise animate pour plus de fluidité sans lag JS
             cursorOutline.animate({
                 left: `${posX}px`,
                 top: `${posY}px`
@@ -940,9 +1215,19 @@
         const interactiveElements = document.querySelectorAll('a, button, input, textarea, .portfolio-card, .service-card');
         
         interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                document.body.classList.add('hover-active');
-            });
+            // Pour les cartes portfolio, on veut le curseur par défaut quand la modale est ouverte
+            if (el.classList.contains('portfolio-card')) {
+                el.addEventListener('mouseenter', () => {
+                    if (!document.body.classList.contains('modal-open')) {
+                        document.body.classList.add('hover-active');
+                    }
+                });
+            } else {
+                el.addEventListener('mouseenter', () => {
+                    document.body.classList.add('hover-active');
+                });
+            }
+
             el.addEventListener('mouseleave', () => {
                 document.body.classList.remove('hover-active');
             });
@@ -950,6 +1235,7 @@
 
 
         // 3. LOGIQUE D'ENVOI DU FORMULAIRE (EmailJS)
+        // Les IDs sont conservés pour que la fonctionnalité continue de fonctionner
         const SERVICE_ID = "service_ehjloc7";
         const TEMPLATE_ID = "template_twibn1o";
         const PUBLIC_KEY = "jW4azcmjTBFobUnZH"; 
@@ -966,14 +1252,13 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // NOUVEAU : VÉRIFICATION HONEYPOT (Anti-spam)
+            // VÉRIFICATION HONEYPOT (Anti-spam)
             const honeypotField = document.getElementById('honeypot');
             if (honeypotField && honeypotField.value.length > 0) {
                 // Si le champ caché est rempli, c'est un bot. On annule l'envoi en silence.
                 console.log("Tentative de spam bloquée.");
                 return; 
             }
-            // FIN VÉRIFICATION HONEYPOT
 
             // Stocker le texte original du bouton
             const originalText = submitButton.textContent;
@@ -988,7 +1273,7 @@
                     // Succès
                     submitButton.textContent = 'Message envoyé ! ✅';
                     
-                    // Gestion du style pour le succès (utiliser Tailwind)
+                    // Gestion du style pour le succès
                     submitButton.classList.remove('btn-highlight');
                     submitButton.classList.remove('bg-red-500', 'hover:bg-red-600');
                     submitButton.classList.add('bg-green-500', 'hover:bg-green-600', 'shadow-green-200'); 
@@ -1008,7 +1293,7 @@
                     console.log('ERREUR SERVEUR EMAILJS : Statut:', error.status, 'Texte:', error.text, error);
                     submitButton.textContent = 'Erreur lors de l\'envoi ❌';
                     
-                    // Gestion du style pour l'erreur (utiliser Tailwind)
+                    // Gestion du style pour l'erreur
                     submitButton.classList.remove('btn-highlight');
                     submitButton.classList.remove('bg-green-500', 'hover:bg-green-600');
                     submitButton.classList.add('bg-red-500', 'hover:bg-red-600', 'shadow-red-200'); 
@@ -1024,7 +1309,7 @@
         });
 
 
-        // 4. LOGIQUE EXISTANTE (Menu Mobile, Scroll, etc.)
+        // 4. LOGIQUE EXISTANTE (Menu Mobile, Scroll, Smooth Scroll, Date)
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const burgerIcon = mobileMenuButton.querySelector('.burger-icon');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -1034,6 +1319,7 @@
             burgerIcon.classList.toggle('open');
         });
 
+        // Fermer le menu mobile au clic sur un lien
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('open');
@@ -1041,6 +1327,7 @@
             });
         });
 
+        // Ombres et couleurs de la barre de navigation au scroll
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -1052,8 +1339,10 @@
             }
         });
 
+        // Année dans le footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
+        // Smooth Scroll avec offset de la navbar
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1071,7 +1360,7 @@
             });
         });
 
-        // 5. LOGIQUE DE FILTRAGE DU PORTFOLIO (NOUVEAU)
+        // 5. LOGIQUE DE FILTRAGE DU PORTFOLIO
         const filterButtons = document.querySelectorAll('.filter-btn');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
         const activeClass = 'active';
@@ -1090,18 +1379,393 @@
                     item.style.display = 'block';
 
                     if (filterValue === 'all') {
-                        return;
-                    }
-
-                    const itemCategory = item.getAttribute('data-category');
-                    
-                    // Masquer si la catégorie ne correspond pas
-                    if (itemCategory !== filterValue) {
-                        item.style.display = 'none'; 
+                        // Utiliser la transition pour cacher/montrer
+                        item.style.display = 'block'; 
+                    } else {
+                        const itemCategory = item.getAttribute('data-category');
+                        
+                        // Masquer si la catégorie ne correspond pas
+                        if (itemCategory !== filterValue) {
+                            item.style.display = 'none'; 
+                        }
                     }
                 });
             });
         });
+
+        // 6. LOGIQUE DE LA MODALE DU PORTFOLIO
+        const modal = document.getElementById('portfolio-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalImage = document.getElementById('modal-image');
+        const modalTags = document.getElementById('modal-tags');
+        const modalDescription = document.getElementById('modal-full-description');
+        const modalContent = document.getElementById('modal-content');
+
+        /**
+         * Ouvre la modale et affiche les détails du projet.
+         * @param {HTMLElement} card - L'élément de la carte de portfolio cliquée.
+         */
+        let currentGallery = [];
+        let currentMediaIndex = 0;
+
+        function openModal(card) {
+            document.body.classList.add('overflow-hidden', 'modal-open');
+            
+            // Récupération des données
+            const title = card.getAttribute('data-title');
+            const tags = card.getAttribute('data-tags');
+            const description = card.getAttribute('data-full-description');
+            const galleryData = card.getAttribute('data-gallery') || card.getAttribute('data-image'); // Gère les deux cas
+            
+            currentGallery = galleryData.split(',').map(item => item.trim());
+            currentMediaIndex = 0;
+
+            // Remplissage texte
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-full-description').textContent = description;
+            
+            // Tags
+            const modalTags = document.getElementById('modal-tags');
+            modalTags.innerHTML = '';
+            tags.split(',').forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'portfolio-tag !bg-pink-100 !text-pink-600';
+                span.textContent = tag.trim();
+                modalTags.appendChild(span);
+            });
+
+            renderMedia();
+
+            // Affichage modale
+            const modal = document.getElementById('portfolio-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'pointer-events-auto');
+            document.getElementById('modal-content').classList.remove('scale-95');
+            document.getElementById('modal-content').classList.add('scale-100');
+        }
+
+        function renderMedia() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            if (currentGallery.length <= 1) {
+                // S'il n'y a qu'une seule image, on cache tout
+                if(prevBtn) prevBtn.style.display = 'none';
+                if(nextBtn) nextBtn.style.display = 'none';
+            } else {
+                // Sinon on affiche
+                if(prevBtn) prevBtn.style.display = 'block';
+                if(nextBtn) nextBtn.style.display = 'block';
+            }
+            const container = document.getElementById('modal-media-container');
+            const loader = document.getElementById('media-loader');
+            const mediaPath = currentGallery[currentMediaIndex];
+            
+            // Mise à jour du compteur
+            const counter = document.getElementById('media-counter');
+            counter.textContent = `${currentMediaIndex + 1} / ${currentGallery.length}`;
+            counter.style.display = currentGallery.length > 1 ? 'block' : 'none';
+
+            // Affichage du loader
+            if(loader) loader.classList.remove('hidden');
+            container.style.opacity = '0'; 
+            container.innerHTML = ''; 
+
+            // --- FONCTION UTILITAIRE POUR CRÉER LE FOND FLOUTÉ ---
+            const createBackground = (type, src) => {
+                const bg = document.createElement(type);
+                bg.src = src;
+                // Classes pour étirer l'image, la flouter et la mettre au fond
+                bg.className = "absolute inset-0 w-full h-full object-cover blur-xl opacity-60 scale-110 pointer-events-none";
+                if(type === 'video') {
+                    bg.muted = true;
+                    bg.autoplay = true;
+                    bg.loop = true;
+                    bg.playsInline = true;
+                }
+                return bg;
+            };
+
+            if (mediaPath.toLowerCase().endsWith('.mp4')) {
+                // --- VIDÉO ---
+                
+                // 1. Création du fond flouté (Ambiance)
+                const bgVideo = createBackground('video', mediaPath);
+                container.appendChild(bgVideo);
+
+                // 2. Création de la vidéo principale (Nette)
+                const video = document.createElement('video');
+                video.src = mediaPath;
+                video.id = "modalVideo";
+                // "shadow-2xl" ajoute une ombre pour bien séparer la vidéo du fond
+                video.className = "relative w-full h-full object-contain z-10 shadow-2xl drop-shadow-lg"; 
+                video.autoplay = true;
+                video.loop = true;
+                video.muted = true;
+                video.playsInline = true;
+
+                video.oncanplay = () => {
+                    if(loader) loader.classList.add('hidden');
+                    container.style.opacity = '1';
+                    // On s'assure que le fond joue aussi
+                    bgVideo.play().catch(e => console.log("Autoplay fond bloqué"));
+                };
+
+                container.appendChild(video);
+
+                // Ajout des contrôles de volume (identique à avant)
+                const volWrapper = document.createElement('div');
+                volWrapper.className = 'volume-wrapper';
+                volWrapper.id = 'volumeContainer';
+                volWrapper.innerHTML = `
+                    <div onclick="toggleMute(event)">
+                        <svg id="volumeIcon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" class="w-6 h-6">
+                            <path d="M11 5L6 9H2V15H6L11 19V5Z" />
+                            <line x1="23" y1="9" x2="17" y2="15" />
+                            <line x1="17" y1="9" x2="23" y2="15" />
+                        </svg>
+                    </div>
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0">
+                `;
+                container.appendChild(volWrapper);
+                setTimeout(setupVolumeControl, 10);
+
+            } else {
+                // --- IMAGE ---
+
+                // 1. Création du fond flouté
+                const bgImg = createBackground('img', mediaPath);
+                container.appendChild(bgImg);
+
+                // 2. Création de l'image principale
+                const img = document.createElement('img');
+                img.src = mediaPath;
+                // On retire le padding p-1 pour que l'image soit plus grande, l'ombre fait la séparation
+                img.className = "relative w-full h-full object-contain z-10 shadow-xl"; 
+                
+                img.onload = () => {
+                    if(loader) loader.classList.add('hidden');
+                    container.style.opacity = '1';
+                };
+
+                container.appendChild(img);
+            }
+            const nextIndex = (currentMediaIndex + 1) % currentGallery.length;
+            const nextPath = currentGallery[nextIndex];
+            
+            // Si ce n'est pas une vidéo, on force le navigateur à la télécharger maintenant
+            if (!nextPath.toLowerCase().endsWith('.mp4')) {
+                const preloadImg = new Image();
+                preloadImg.src = nextPath;
+            }
+        }
+
+        function changeMedia(direction) {
+            currentMediaIndex += direction;
+            if (currentMediaIndex >= currentGallery.length) currentMediaIndex = 0;
+            if (currentMediaIndex < 0) currentMediaIndex = currentGallery.length - 1;
+            renderMedia();
+        }
+
+        function closeModal() {
+            const video = document.getElementById('modalVideo');
+            if (video) {
+                video.pause();
+                video.src = "";
+            }
+            const modal = document.getElementById('portfolio-modal');
+            const modalContent = document.getElementById('modal-content');
+
+            // 1. On retire les classes qui forcent l'affichage
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+            modalContent.classList.remove('scale-100');
+
+            // 2. On remet les classes qui cachent la modale
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.add('scale-95');
+
+            document.body.classList.remove('overflow-hidden', 'modal-open');
+        }
+
+        function setupVolumeControl() {
+        const video = document.getElementById('modalVideo');
+        const slider = document.getElementById('volumeSlider');
+        const icon = document.getElementById('volumeIcon');
+
+        if (!slider || !video) return;
+
+        // Changement du volume via le slider
+        slider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            video.volume = val;
+            
+            if (val > 0) {
+                video.muted = false;
+                updateVolumeIcon(false);
+            } else {
+                video.muted = true;
+                updateVolumeIcon(true);
+            }
+        });
+
+        // Empêcher la fermeture de la modale quand on utilise le slider
+        slider.addEventListener('click', (e) => e.stopPropagation());
+    }
+
+    function toggleMute(event) {
+        event.stopPropagation();
+        const video = document.getElementById('modalVideo');
+        const slider = document.getElementById('volumeSlider');
+        
+        if (video.muted) {
+            video.muted = false;
+            video.volume = 0.5;
+            slider.value = 0.5;
+            updateVolumeIcon(false);
+        } else {
+            video.muted = true;
+            slider.value = 0;
+            updateVolumeIcon(true);
+        }
+    }
+
+    function updateVolumeIcon(isMuted) {
+        const icon = document.getElementById('volumeIcon');
+        if (isMuted) {
+            icon.innerHTML = `
+                <path d="M11 5L6 9H2V15H6L11 19V5Z" />
+                <line x1="23" y1="9" x2="17" y2="15" stroke="white" />
+                <line x1="17" y1="9" x2="23" y2="15" stroke="white" />
+            `;
+        } else {
+            icon.innerHTML = `
+                <path d="M11 5L6 9H2V15H6L11 19V5Z" />
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            `;
+        }
+    }
+        
+        
+    // Navigation au clavier (Flèches Gauche/Droite)
+    document.addEventListener('keydown', function(e) {
+        if (document.getElementById('portfolio-modal').classList.contains('opacity-0')) return; // Si fermé, on fait rien
+
+        if (e.key === 'ArrowLeft') {
+            changeMedia(-1);
+        } else if (e.key === 'ArrowRight') {
+            changeMedia(1);
+        }
+    });
+        /**
+         * Alterne le son de la vidéo dans la modale
+         */
+        
+         function toggleVolume(event) {
+            // Empêche de fermer la modale si on clique sur le bouton
+            event.stopPropagation();
+            
+            const video = document.getElementById('modalVideo');
+            const icon = document.getElementById('volumeIcon');
+            
+            if (video.muted) {
+                video.muted = false;
+                // Changer l'icône pour "Son activé"
+                icon.innerHTML = `
+                    <path d="M11 5L6 9H2V15H6L11 19V5Z" />
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                `;
+            } else {
+                video.muted = true;
+                // Revenir à l'icône "Mute"
+                icon.innerHTML = `
+                    <path d="M11 5L6 9H2V15H6L11 19V5Z" />
+                    <line x1="23" y1="9" x2="17" y2="15" />
+                    <line x1="17" y1="9" x2="23" y2="15" />
+                `;
+            }
+        }
+        // Fermer la modale en cliquant sur l'arrière-plan
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Fermer la modale en appuyant sur la touche ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) {
+                closeModal();
+            }
+        });
+
+        // 7. LOGIQUE DU BOUTON SCROLL-TO-TOP (NOUVEAU)
+        const scrollToTopButton = document.getElementById('scroll-to-top');
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Afficher/masquer le bouton selon la position de défilement
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) { // Apparaît après 400px de défilement
+                scrollToTopButton.classList.add('show');
+            } else {
+                scrollToTopButton.classList.remove('show');
+            }
+        });
+        // --- NOUVELLES FONCTIONNALITÉS INTERACTIVES ---
+
+        // 1. Barre de progression au scroll
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        });
+
+        // 2. Effet Magnétique sur les boutons principaux
+        const magneticButtons = document.querySelectorAll('.btn-highlight, .btn-highlight-outline');
+        magneticButtons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                // Déplacement doux de 30% vers la souris
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = `translate(0px, 0px)`;
+            });
+        });
+
+        // Gestion du Swipe sur mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        const mediaContainer = document.getElementById('modal-media-container');
+
+        mediaContainer.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        mediaContainer.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                changeMedia(1); // Swipe vers la gauche -> Suivant
+            }
+            if (touchEndX > touchStartX + 50) {
+                changeMedia(-1); // Swipe vers la droite -> Précédent
+            }
+        }
     </script>
 </body>
 </html>
