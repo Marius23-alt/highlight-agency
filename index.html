@@ -416,6 +416,65 @@
             width: 20px;
             height: 20px;
         }
+
+        /* Animation des Blobs d'arrière-plan */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+
+        /* Animation de la petite souris (Scroll Down) */
+        @keyframes scroll-dot {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(15px); opacity: 0; }
+        }
+        .animate-scroll-dot {
+            animation: scroll-dot 1.5s infinite;
+        }
+        /* Style des liens de navigation (Desktop) */
+    .nav-link {
+        padding: 0.5rem 1.25rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #4a5568; /* gris-600 */
+        border-radius: 9999px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #ff9abf; /* primary */
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .nav-link.active {
+        background-color: white;
+        color: #ff9abf;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    /* Menu Mobile Ouvert */
+    #mobile-menu.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: scale(100%);
+    }
+
+    /* Modification du burger icon pour ce nouveau style */
+    .burger-icon span {
+        border-radius: 2px;
+    }
     </style>
     <script>
         // Configuration de Tailwind
@@ -467,93 +526,134 @@
     <div class="cursor-outline"></div>
 
     <!-- BARRE DE NAVIGATION FIXE -->
-    <nav class="bg-white/90 backdrop-blur-md shadow-sm fixed w-full z-50 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
-                <div class="flex-shrink-0 flex items-center group cursor-pointer">
-                    <!-- Logo stylisé -->
-                    <div class="relative w-12 h-12 mr-3 transition-transform duration-300 group-hover:scale-105">
-                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Fond du logo -->
-                            <rect x="5" y="5" width="90" height="90" rx="15" stroke="#ff9abf" stroke-width="6" fill="white"/>
-                            <!-- Forme abstraite (Inspiration "Highlight") -->
-                            <path d="M35 40 L65 30 V60 L35 50 V40 Z" stroke="#ff9abf" stroke-width="5" stroke-linejoin="round"/>
-                            <circle cx="35" cy="45" r="8" stroke="#ff9abf" stroke-width="5"/>
-                            <path d="M35 55 L25 75 M35 55 L45 75" stroke="#ff9abf" stroke-width="5" stroke-linecap="round"/>
-                            <!-- Étoiles/Éclairs -->
-                            <path d="M75 25 L78 18 L81 25 L88 28 L81 31 L78 38 L75 31 L68 28 Z" fill="#ff9abf"/>
-                            <path d="M85 45 L87 40 L89 45 L94 47 L89 49 L87 54 L85 49 L80 47 Z" fill="#ff9abf"/>
-                        </svg>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-2xl font-bold text-dark font-heading leading-none">Highlight</span>
-                        <span class="text-sm font-medium text-pink-400 font-heading tracking-widest uppercase">Agency</span>
-                    </div>
-                </div>
-                
-                <!-- Menu Desktop -->
-                <div class="hidden md:flex items-center space-x-2 relative" id="desktop-menu-container">
-                    <div id="nav-bubble"></div>
+    <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 transition-all duration-300 px-4" id="navbar">
 
-                    <a href="#home" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Accueil</a>
-                    <a href="#about" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">À propos</a>
-                    <a href="#services" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Services</a>
-                    <a href="#portfolio" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Réalisations</a>
-                    <a href="#testimonials" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">Avis</a>
-                    <a href="#team" class="nav-item text-gray-600 hover:text-pink-600 font-medium transition duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-full">L'Équipe</a>
-                    <a href="#contact" class="btn-highlight shadow-pink-200 ml-4">Contactez-nous</a>
-                </div>
+    <div class="bg-white/80 backdrop-blur-xl border border-white/50 shadow-lg shadow-pink-100/20 rounded-full px-6 py-3 w-full max-w-6xl flex justify-between items-center transition-all duration-300" id="navbar-inner">
+        
+        <a href="#home" class="flex-shrink-0 flex items-center group cursor-pointer gap-3">
+            <div class="relative w-10 h-10 transition-transform duration-300 group-hover:rotate-12">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="5" y="5" width="90" height="90" rx="25" fill="#ff9abf"/>
+                    <path d="M35 40 L65 30 V60 L35 50 V40 Z" stroke="white" stroke-width="5" stroke-linejoin="round"/>
+                    <path d="M75 25 L88 28 L75 31 Z" fill="white"/>
+                </svg>
+            </div>
+            <div class="flex flex-col leading-none">
+                <span class="text-xl font-bold text-dark font-heading tracking-tight">Highlight</span>
+                <span class="text-[0.6rem] font-bold text-pink-500 uppercase tracking-[0.2em]">Agency</span>
+            </div>
+        </a>
+        
+        <div id="desktop-menu-container" class="hidden md:flex items-center bg-gray-100/50 rounded-full px-1 py-1 border border-gray-100/50 relative">
+            <div id="nav-bubble" class="absolute bg-white shadow-sm rounded-full transition-all duration-300 ease-out opacity-0 z-0"></div>
+            
+            <a href="#home" class="nav-link active relative z-10 px-4 py-2 rounded-full transition-colors duration-200 hover:text-pink-500">Accueil</a>
+            <a href="#about" class="nav-link relative z-10 px-4 py-2 rounded-full transition-colors duration-200 hover:text-pink-500">L'Agence</a>
+            <a href="#services" class="nav-link relative z-10 px-4 py-2 rounded-full transition-colors duration-200 hover:text-pink-500">Expertise</a>
+            <a href="#portfolio" class="nav-link relative z-10 px-4 py-2 rounded-full transition-colors duration-200 hover:text-pink-500">Projets</a>
+            <a href="#team" class="nav-link relative z-10 px-4 py-2 rounded-full transition-colors duration-200 hover:text-pink-500">Team</a>
+        </div>
 
-                <!-- Bouton Menu Mobile -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="focus:outline-none p-2">
-                        <div class="burger-icon">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </button>
+        <div class="hidden md:flex items-center pl-4">
+            <a href="#contact" class="bg-dark text-white hover:bg-pink-500 px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                Contact
+            </a>
+        </div>
+
+        <div class="md:hidden flex items-center">
+            <button id="mobile-menu-button" class="focus:outline-none p-2 text-dark">
+                <div class="burger-icon">
+                    <span class="bg-dark w-6 h-0.5 mb-1.5 block transition-all"></span>
+                    <span class="bg-dark w-6 h-0.5 mb-1.5 block transition-all"></span>
+                    <span class="bg-dark w-6 h-0.5 block transition-all"></span>
                 </div>
-            </div>
+            </button>
         </div>
-        <!-- Menu Mobile défilant -->
-        <div class="md:hidden bg-white shadow-lg" id="mobile-menu">
-            <div class="px-2 pt-2 pb-5 space-y-1 sm:px-3">
-                <a href="#home" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Accueil</a>
-                <a href="#about" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">À propos</a>
-                <a href="#services" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Services</a>
-                <a href="#portfolio" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Réalisations</a>
-                <a href="#testimonials" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Avis</a>
-                <a href="#team" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">L'Équipe</a>
-                <a href="#contact" class="block px-3 py-3 rounded-md text-base font-medium text-dark hover:text-primary-color hover:bg-pink-50 transition duration-300">Contact</a>
-                <a href="#contact" class="block w-full text-center btn-highlight mt-4">Démarrer un projet</a>
-            </div>
+    </div>
+
+    <div class="absolute top-20 w-[95%] max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 transform origin-top scale-95 opacity-0 pointer-events-none" id="mobile-menu">
+        <div class="p-2 space-y-1">
+            <a href="#home" class="block px-4 py-3 rounded-xl text-dark font-medium hover:bg-pink-50 hover:text-pink-600 transition">Accueil</a>
+            <a href="#about" class="block px-4 py-3 rounded-xl text-dark font-medium hover:bg-pink-50 hover:text-pink-600 transition">L'Agence</a>
+            <a href="#services" class="block px-4 py-3 rounded-xl text-dark font-medium hover:bg-pink-50 hover:text-pink-600 transition">Services</a>
+            <a href="#portfolio" class="block px-4 py-3 rounded-xl text-dark font-medium hover:bg-pink-50 hover:text-pink-600 transition">Portfolio</a>
+            <a href="#contact" class="block px-4 py-3 mt-2 rounded-xl bg-dark text-white text-center font-bold">Démarrer un projet</a>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- SECTION 1: HÉRO (Accueil) -->
-    <header id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-white relative overflow-hidden min-h-[95vh] flex items-center">
-        <div class="absolute inset-0 z-0 pointer-events-none">
-            <spline-viewer url="https://prod.spline.design/6Wq1Q7nEie3998iR/scene.splinecode"></spline-viewer>
+    <header id="home" class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden min-h-screen flex items-center justify-center">
+        
+        <div class="absolute inset-0 z-0 bg-white">
+            <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+            <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+            <div class="absolute bottom-[-20%] left-[20%] w-[500px] h-[500px] bg-yellow-100 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-            <div class="text-center">
-                <div class="inline-block px-4 py-1 rounded-full glass-effect text-pink-500 text-sm font-semibold mb-6 tracking-wide uppercase shadow-sm border border-pink-100" data-aos="fade-down">
-                    Création Digitale & Stratégie 3D
+        <div class="absolute inset-0 z-0 opacity-80 pointer-events-none">
+            <spline-viewer url="https://prod.spline.design/6Wq1Q7nEie3998iR/scene.splinecode" class="transform scale-110"></spline-viewer>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
+            
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/50 backdrop-blur-md border border-white/60 shadow-sm mb-8 transform hover:scale-105 transition duration-300 cursor-default" data-aos="fade-down">
+                <span class="flex h-2 w-2 relative mr-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+                </span>
+                <span class="text-sm font-semibold text-gray-600 tracking-wide uppercase">Agence Créative & Stratégique</span>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl font-bold text-dark mb-6 leading-tight tracking-tight" data-aos="fade-up" data-aos-duration="1000">
+                Faisons <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">briller</span><br/>
+                <span class="relative inline-block">
+                    <span class="absolute -bottom-2 left-0 w-full h-4 bg-pink-200/50 -rotate-1 rounded-full"></span>
+                    <span class="relative">votre image.</span>
+                </span>
+            </h1>
+
+            <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+                Nous transformons votre vision en une expérience digitale 
+                <span class="font-semibold text-dark bg-pink-50 px-2 py-1 rounded-lg">inoubliable</span>.
+            </p>
+
+            <div class="flex flex-col items-center space-y-8" data-aos="fade-up" data-aos-delay="400">
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#contact" class="btn-highlight text-lg px-8 py-4 shadow-xl shadow-pink-200/50 flex items-center justify-center">
+                        Démarrer un projet
+                        <svg class="w-5 h-5 ml-2 -mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                    </a>
+                    <a href="#portfolio" class="group bg-white/80 backdrop-blur-sm hover:bg-white text-dark border border-gray-200 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center justify-center hover:shadow-lg">
+                        <span>Explorer le portfolio</span>
+                    </a>
                 </div>
-                <h1 class="text-5xl md:text-7xl font-bold text-dark mb-8 leading-tight tracking-tight" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                    Faisons briller votre image : <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-pink-600">L'immersion au service de ta vision</span>
-                </h1>
-                <p class="text-xl text-gray-500 mb-10 max-w-2xl mx-auto font-light glass-effect p-4 rounded-xl" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-                    Highlight Agency est ton partenaire à <span class="font-medium text-dark">Toulouse</span>. Nous concevons des identités qui captent l'attention.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
-                    <a href="#contact" class="btn-highlight text-lg px-10">Démarrer un projet</a>
-                    <a href="#portfolio" class="btn-highlight-outline text-lg px-10 glass-effect">Voir le portfolio</a>
+
+                <div class="flex items-center space-x-4 pt-4 opacity-90 hover:opacity-100 transition-opacity">
+                    <div class="flex -space-x-3">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=1" alt="Client">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=5" alt="Client">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=9" alt="Client">
+                        <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">+20</div>
+                    </div>
+                    <div class="text-left">
+                        <div class="flex text-yellow-400">
+                            ★★★★★
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium">Clients satisfaits à Toulouse</p>
+                    </div>
                 </div>
+
             </div>
         </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer opacity-60 hover:opacity-100 transition-opacity" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
+            <div class="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center p-1">
+                <div class="w-1 h-2 bg-gray-400 rounded-full animate-scroll-dot"></div>
+            </div>
+        </div>
+
     </header>
 
     <!-- SECTION 2: À PROPOS -->
@@ -1088,53 +1188,58 @@
     </footer>
 
     <!-- MODALE DU PORTFOLIO (Ajoutée ici) -->
-    <div id="portfolio-modal" class="modal fixed inset-0 z-[100] bg-gray-900 bg-opacity-80 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300" aria-modal="true" role="dialog">
+    <div id="portfolio-modal" class="modal fixed inset-0 z-[100] bg-gray-900/90 backdrop-blur-sm flex items-center justify-center p-0 md:p-4 opacity-0 pointer-events-none transition-opacity duration-300" aria-modal="true" role="dialog">
         
-        <div class="bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-95 relative flex flex-col" id="modal-content">
+        <div class="bg-white md:rounded-xl shadow-2xl w-full h-full md:h-[90vh] md:max-w-6xl overflow-hidden transform transition-all duration-300 scale-95 relative flex flex-col" id="modal-content">
         
-        <div class="flex flex-col md:flex-row h-full flex-grow overflow-hidden">
-            
-            <div class="relative h-64 md:h-auto flex-1 bg-black flex items-center justify-center group overflow-hidden">
+            <div class="flex flex-col md:flex-row h-full w-full overflow-hidden">
                 
-                <div id="media-loader" class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-                    <div class="animate-spin rounded-full h-12 w-12 border-4 border-gray-600 border-t-pink-500"></div>
-                </div>
-
-                <div id="modal-media-container" class="w-full h-full flex items-center justify-center relative z-10 transition-opacity duration-300 opacity-0">
+                <div class="relative h-[35vh] md:h-auto md:flex-1 bg-black flex items-center justify-center group overflow-hidden">
+                    
+                    <div id="media-loader" class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+                        <div class="animate-spin rounded-full h-12 w-12 border-4 border-gray-600 border-t-pink-500"></div>
                     </div>
 
-                <button id="prev-btn" onclick="changeMedia(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white transition-all opacity-0 group-hover:opacity-100 z-30 backdrop-blur-sm">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <button id="next-btn" onclick="changeMedia(1)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white transition-all opacity-0 group-hover:opacity-100 z-30 backdrop-blur-sm">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </button>
+                    <div id="modal-media-container" class="w-full h-full flex items-center justify-center relative z-10 transition-opacity duration-300 opacity-0">
+                        </div>
 
-                <div id="media-counter" class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full z-30 font-medium border border-white/10"></div>
+                    <button id="prev-btn" onclick="changeMedia(-1)" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-white/30 p-2 md:p-3 rounded-full text-white transition-all z-30 backdrop-blur-md border border-white/20">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button id="next-btn" onclick="changeMedia(1)" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-white/30 p-2 md:p-3 rounded-full text-white transition-all z-30 backdrop-blur-md border border-white/20">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+
+                    <div id="media-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full z-30 font-medium border border-white/10"></div>
+                </div>
+                
+                <div class="relative bg-white flex-1 md:flex-none md:w-[450px] flex flex-col overflow-hidden border-l border-gray-100">
+                    
+                    <div class="overflow-y-auto p-6 md:p-10 h-full">
+                        <h2 id="modal-title" class="text-2xl md:text-3xl font-bold text-dark mb-4 font-heading pt-2">Titre</h2>
+                        <div class="flex flex-wrap gap-2 mb-6" id="modal-tags"></div>
+                        
+                        <div class="w-16 h-1 bg-pink-400 rounded-full mb-6"></div>
+
+                        <h3 class="text-lg md:text-xl font-semibold text-dark mb-3 font-heading">Le projet</h3>
+                        <p id="modal-full-description" class="text-gray-600 leading-relaxed mb-8 text-sm md:text-base"></p>
+                        
+                        <div class="mt-auto pt-4">
+                            <a href="#contact" onclick="closeModal()" class="btn-highlight text-center block w-full text-sm md:text-base">
+                                Démarrer un projet similaire
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <button onclick="event.stopPropagation(); closeModal()" class="absolute top-4 right-4 z-50 bg-white/80 backdrop-blur-md hover:bg-white p-2 rounded-full text-dark hover:text-pink-600 transition duration-200 shadow-lg border border-white/50">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
             
-            <div class="p-8 md:p-10 relative bg-white overflow-y-auto w-full md:w-[450px] flex-shrink-0 border-l border-gray-100">
-                <h2 id="modal-title" class="text-3xl font-bold text-dark mb-4 font-heading pt-6 md:pt-0">Titre</h2>
-                <div class="flex flex-wrap gap-2 mb-6" id="modal-tags"></div>
-                
-                <div class="w-16 h-1 bg-pink-400 rounded-full mb-6"></div>
-
-                <h3 class="text-xl font-semibold text-dark mb-3 font-heading">Le projet</h3>
-                <p id="modal-full-description" class="text-gray-600 leading-relaxed mb-8 text-sm md:text-base"></p>
-                
-                <a href="#contact" onclick="closeModal()" class="btn-highlight text-center block w-full">
-                    Démarrer votre projet similaire
-                </a>
-            </div>
         </div>
-
-        <button onclick="event.stopPropagation(); closeModal()" class="absolute top-4 right-4 z-50 bg-gray-100 hover:bg-gray-200 p-2 rounded-full text-dark hover:text-pink-600 transition duration-200 shadow-sm border border-gray-200">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-        
-    </div>
     </div>
     <!-- FIN MODALE -->
 
@@ -1151,621 +1256,467 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialisation d'AOS
-        AOS.init({
-            once: true, // L'animation ne se joue qu'une seule fois
-            offset: 120, // Décalage en pixels avant le déclenchement
-        });
+        AOS.init({ once: true, offset: 120 });
 
-        // 1. LOGIQUE DE LA "BULLE DE NAVIGATION" (Lavalamp)
+        // ============================================================
+        // 1. LOGIQUE DE LA "BULLE DE NAVIGATION" (CORRIGÉE)
+        // ============================================================
         const navContainer = document.getElementById('desktop-menu-container');
         const bubble = document.getElementById('nav-bubble');
-        const navLinks = document.querySelectorAll('.nav-item');
+        // Correction ici : on cible .nav-link au lieu de .nav-item
+        const navLinks = document.querySelectorAll('.nav-link');
 
         function moveBubble(element) {
-            // Empêche l'animation si le menu n'est pas affiché (ex: sur mobile)
-            if (window.innerWidth < 768) return; 
+            if (window.innerWidth < 768 || !bubble || !navContainer) return; 
 
             if (!element) {
-                // Cacher la bulle si on sort de la zone de navigation
                 bubble.style.opacity = '0';
                 return;
             }
             
-            // Calculer la position et la taille de l'élément survolé par rapport au conteneur parent
             const rect = element.getBoundingClientRect();
             const parentRect = navContainer.getBoundingClientRect();
 
             const left = rect.left - parentRect.left;
             const width = rect.width;
+            const height = rect.height;
+            const top = rect.top - parentRect.top;
 
             bubble.style.width = `${width}px`;
-            bubble.style.transform = `translateX(${left}px)`;
+            bubble.style.height = `${height}px`;
+            // On utilise translate pour plus de fluidité
+            bubble.style.transform = `translate(${left}px, ${top}px)`;
             bubble.style.opacity = '1';
         }
 
-        // Ajouter les écouteurs d'événements
         navLinks.forEach(link => {
             link.addEventListener('mouseenter', (e) => moveBubble(e.target));
         });
 
-        navContainer.addEventListener('mouseleave', () => moveBubble(null));
+        if (navContainer) {
+            navContainer.addEventListener('mouseleave', () => {
+                // Retourne sur l'élément actif au lieu de disparaître
+                const active = document.querySelector('.nav-link.active');
+                if(active) moveBubble(active);
+                else bubble.style.opacity = '0';
+            });
+        }
+        
+        // Initialisation au chargement
+        setTimeout(() => {
+            const active = document.querySelector('.nav-link.active');
+            if(active) moveBubble(active);
+        }, 500);
 
 
+        // ============================================================
         // 2. LOGIQUE DU CURSEUR PERSONNALISÉ
+        // ============================================================
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
 
-        // Suivre la souris
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
+        if (cursorDot && cursorOutline) {
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
 
-            // Le point suit instantanément
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
 
-            // Le cercle suit avec un léger délai (animation CSS handle le reste)
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
-
-        // Effet Hover sur les éléments interactifs
-        const interactiveElements = document.querySelectorAll('a, button, input, textarea, .portfolio-card, .service-card');
-        
-        interactiveElements.forEach(el => {
-            // Pour les cartes portfolio, on veut le curseur par défaut quand la modale est ouverte
-            if (el.classList.contains('portfolio-card')) {
-                el.addEventListener('mouseenter', () => {
-                    if (!document.body.classList.contains('modal-open')) {
-                        document.body.classList.add('hover-active');
-                    }
-                });
-            } else {
-                el.addEventListener('mouseenter', () => {
-                    document.body.classList.add('hover-active');
-                });
-            }
-
-            el.addEventListener('mouseleave', () => {
-                document.body.classList.remove('hover-active');
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: "forwards" });
             });
+        }
+
+        const interactiveElements = document.querySelectorAll('a, button, input, textarea, .portfolio-card, .service-card');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                if (!document.body.classList.contains('modal-open')) {
+                    document.body.classList.add('hover-active');
+                }
+            });
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
         });
 
 
-        // 3. LOGIQUE D'ENVOI DU FORMULAIRE (EmailJS)
-        // Les IDs sont conservés pour que la fonctionnalité continue de fonctionner
+        // ============================================================
+        // 3. LOGIQUE EMAILJS (VOTRE VERSION COMPLÈTE)
+        // ============================================================
         const SERVICE_ID = "service_ehjloc7";
         const TEMPLATE_ID = "template_twibn1o";
         const PUBLIC_KEY = "jW4azcmjTBFobUnZH"; 
 
-        // Initialiser EmailJS avec la clé publique
-        (function() {
-        emailjs.init(PUBLIC_KEY);
-        })();
-
+        (function() { emailjs.init(PUBLIC_KEY); })();
 
         const form = document.getElementById('contact-form');
-        const submitButton = form.querySelector('button[type="submit"]');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // VÉRIFICATION HONEYPOT (Anti-spam)
-            const honeypotField = document.getElementById('honeypot');
-            if (honeypotField && honeypotField.value.length > 0) {
-                // Si le champ caché est rempli, c'est un bot. On annule l'envoi en silence.
-                console.log("Tentative de spam bloquée.");
-                return; 
-            }
-
-            // Stocker le texte original du bouton
-            const originalText = submitButton.textContent;
-
-            // Désactiver le bouton et indiquer l'envoi
-            submitButton.textContent = 'Envoi en cours...';
-            submitButton.disabled = true;
-
-            // Envoi du formulaire via EmailJS
-            emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
-                .then(function() {
-                    // Succès
-                    submitButton.textContent = 'Message envoyé ! ✅';
-                    
-                    // Gestion du style pour le succès
-                    submitButton.classList.remove('btn-highlight');
-                    submitButton.classList.remove('bg-red-500', 'hover:bg-red-600');
-                    submitButton.classList.add('bg-green-500', 'hover:bg-green-600', 'shadow-green-200'); 
-                    
-                    form.reset(); // Vider le formulaire
-                    
-                    // Réinitialiser le bouton après 3 secondes
-                    setTimeout(() => {
-                        submitButton.textContent = originalText;
-                        submitButton.disabled = false;
-                        submitButton.classList.add('btn-highlight');
-                        submitButton.classList.remove('bg-green-500', 'hover:bg-green-600', 'shadow-green-200');
-                    }, 3000);
-
-                }, function(error) {
-                    // Erreur
-                    console.log('ERREUR SERVEUR EMAILJS : Statut:', error.status, 'Texte:', error.text, error);
-                    submitButton.textContent = 'Erreur lors de l\'envoi ❌';
-                    
-                    // Gestion du style pour l'erreur
-                    submitButton.classList.remove('btn-highlight');
-                    submitButton.classList.remove('bg-green-500', 'hover:bg-green-600');
-                    submitButton.classList.add('bg-red-500', 'hover:bg-red-600', 'shadow-red-200'); 
-
-                    // Réactiver le bouton après 3 secondes
-                    setTimeout(() => {
-                        submitButton.textContent = originalText;
-                        submitButton.disabled = false;
-                        submitButton.classList.add('btn-highlight');
-                        submitButton.classList.remove('bg-red-500', 'hover:bg-red-600', 'shadow-red-200');
-                    }, 3000);
-                });
-        });
-
-
-        // 4. LOGIQUE EXISTANTE (Menu Mobile, Scroll, Smooth Scroll, Date)
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const burgerIcon = mobileMenuButton.querySelector('.burger-icon');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-            burgerIcon.classList.toggle('open');
-        });
-
-        // Fermer le menu mobile au clic sur un lien
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('open');
-                burgerIcon.classList.remove('open');
-            });
-        });
-
-        // Ombres et couleurs de la barre de navigation au scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-lg', 'bg-white');
-                navbar.classList.remove('shadow-md');
-            } else {
-                navbar.classList.add('shadow-md');
-                navbar.classList.remove('shadow-lg');
-            }
-        });
-
-        // Année dans le footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // Smooth Scroll avec offset de la navbar
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        if (form) {
+            const submitButton = form.querySelector('button[type="submit"]');
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const navbarHeight = document.getElementById('navbar').offsetHeight;
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
+                const honeypotField = document.getElementById('honeypot');
+                if (honeypotField && honeypotField.value.length > 0) return; 
+
+                const originalText = submitButton.textContent;
+                submitButton.textContent = 'Envoi en cours...';
+                submitButton.disabled = true;
+
+                emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+                    .then(function() {
+                        submitButton.textContent = 'Message envoyé ! ✅';
+                        submitButton.classList.remove('btn-highlight', 'bg-red-500', 'hover:bg-red-600');
+                        submitButton.classList.add('bg-green-500', 'hover:bg-green-600', 'shadow-green-200'); 
+                        form.reset();
+                        setTimeout(() => {
+                            submitButton.textContent = originalText;
+                            submitButton.disabled = false;
+                            submitButton.classList.add('btn-highlight');
+                            submitButton.classList.remove('bg-green-500', 'hover:bg-green-600', 'shadow-green-200');
+                        }, 3000);
+                    }, function(error) {
+                        console.log('ERREUR:', error);
+                        submitButton.textContent = 'Erreur lors de l\'envoi ❌';
+                        submitButton.classList.remove('btn-highlight', 'bg-green-500', 'hover:bg-green-600');
+                        submitButton.classList.add('bg-red-500', 'hover:bg-red-600', 'shadow-red-200'); 
+                        setTimeout(() => {
+                            submitButton.textContent = originalText;
+                            submitButton.disabled = false;
+                            submitButton.classList.add('btn-highlight');
+                            submitButton.classList.remove('bg-red-500', 'hover:bg-red-600', 'shadow-red-200');
+                        }, 3000);
                     });
+            });
+        }
+
+        // ============================================================
+        // 4. AUTRES FONCTIONNALITÉS (Menu Mobile, Smart Navbar, Scroll)
+        // ============================================================
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const burgerIcon = mobileMenuButton?.querySelector('.burger-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navbar = document.getElementById('navbar');
+        const navbarInner = document.getElementById('navbar-inner');
+        
+        // Variable pour suivre la position du scroll (Smart Navbar)
+        let lastScrollY = window.scrollY;
+
+        // Gestion du Menu Mobile
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('open');
+                if(burgerIcon) burgerIcon.classList.toggle('open');
+            });
+        }
+        
+        // Fermeture du menu si on clique ailleurs
+        document.addEventListener('click', (e) => {
+            if (mobileMenu && mobileMenu.classList.contains('open') && !navbar.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+                if(burgerIcon) burgerIcon.classList.remove('open');
+            }
+        });
+
+        // --- GESTION DU SCROLL ET DE LA NAVBAR ---
+        const sections = document.querySelectorAll('section, header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            // A. Apparence de la Navbar (Taille & Transparence)
+            if (currentScrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+                if(navbarInner) {
+                    navbarInner.classList.add('shadow-xl', 'bg-white/95');
+                    navbarInner.classList.remove('bg-white/80', 'shadow-lg');
+                }
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+                if(navbarInner) {
+                    navbarInner.classList.remove('shadow-xl', 'bg-white/95');
+                    navbarInner.classList.add('bg-white/80', 'shadow-lg');
+                }
+            }
+
+            // B. Smart Navbar (Disparition/Apparition)
+            // Si on descend de plus de 100px et qu'on scrolle vers le bas -> Cacher
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                navbar.style.transform = 'translateY(-150%)';
+            } else {
+                // Si on remonte -> Afficher
+                navbar.style.transform = 'translateY(0)';
+            }
+            lastScrollY = currentScrollY;
+
+            // C. Scroll Spy (Liens actifs & Bulle)
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                // On détecte la section un peu avant de l'atteindre (-200px)
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
                 }
             });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                    // Met à jour la position de la bulle si on est sur Desktop
+                    if(window.innerWidth >= 768 && typeof moveBubble === "function") {
+                        moveBubble(link);
+                    }
+                }
+            });
+
+            // D. Barre de progression (Haut de page)
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const progressBar = document.getElementById("scroll-progress");
+            if(progressBar) progressBar.style.width = scrolled + "%";
+
+            // E. Bouton "Scroll to Top"
+            const scrollBtn = document.getElementById('scroll-to-top');
+            if (scrollBtn) {
+                if (window.scrollY > 400) scrollBtn.classList.add('show');
+                else scrollBtn.classList.remove('show');
+            }
         });
 
-        // 5. LOGIQUE DE FILTRAGE DU PORTFOLIO
+        // Réapparition de la navbar au survol de la souris (Zone haute)
+        document.addEventListener('mousemove', (e) => {
+            if (e.clientY < 100) {
+                navbar.style.transform = 'translateY(0)';
+            }
+        });
+
+        // ============================================================
+        // 5. MODALE & PORTFOLIO
+        // ============================================================
+        
+        // Filtres
         const filterButtons = document.querySelectorAll('.filter-btn');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
-        const activeClass = 'active';
-
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // 1. Mise à jour du bouton actif
-                filterButtons.forEach(btn => btn.classList.remove(activeClass));
-                this.classList.add(activeClass);
-
-                const filterValue = this.getAttribute('data-filter');
-
-                // 2. Filtrage des éléments
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                const filter = this.getAttribute('data-filter');
                 portfolioItems.forEach(item => {
-                    // Afficher tous les éléments par défaut
-                    item.style.display = 'block';
-
-                    if (filterValue === 'all') {
-                        // Utiliser la transition pour cacher/montrer
-                        item.style.display = 'block'; 
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => item.style.opacity = '1', 50);
                     } else {
-                        const itemCategory = item.getAttribute('data-category');
-                        
-                        // Masquer si la catégorie ne correspond pas
-                        if (itemCategory !== filterValue) {
-                            item.style.display = 'none'; 
-                        }
+                        item.style.display = 'none';
+                        item.style.opacity = '0';
                     }
                 });
             });
         });
 
-        // 6. LOGIQUE DE LA MODALE DU PORTFOLIO
-        const modal = document.getElementById('portfolio-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalImage = document.getElementById('modal-image');
-        const modalTags = document.getElementById('modal-tags');
-        const modalDescription = document.getElementById('modal-full-description');
-        const modalContent = document.getElementById('modal-content');
-
-        /**
-         * Ouvre la modale et affiche les détails du projet.
-         * @param {HTMLElement} card - L'élément de la carte de portfolio cliquée.
-         */
+        // Modale
         let currentGallery = [];
         let currentMediaIndex = 0;
 
-        function openModal(card) {
+        // Fonction globale pour le onclick HTML
+        window.openModal = function(card) {
             document.body.classList.add('overflow-hidden', 'modal-open');
             
-            // Récupération des données
             const title = card.getAttribute('data-title');
             const tags = card.getAttribute('data-tags');
             const description = card.getAttribute('data-full-description');
-            const galleryData = card.getAttribute('data-gallery') || card.getAttribute('data-image'); // Gère les deux cas
+            const galleryData = card.getAttribute('data-gallery') || card.getAttribute('data-image');
             
-            currentGallery = galleryData.split(',').map(item => item.trim());
+            currentGallery = galleryData ? galleryData.split(',').map(item => item.trim()) : [];
             currentMediaIndex = 0;
 
-            // Remplissage texte
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-full-description').textContent = description;
             
-            // Tags
             const modalTags = document.getElementById('modal-tags');
-            modalTags.innerHTML = '';
-            tags.split(',').forEach(tag => {
-                const span = document.createElement('span');
-                span.className = 'portfolio-tag !bg-pink-100 !text-pink-600';
-                span.textContent = tag.trim();
-                modalTags.appendChild(span);
-            });
+            if (modalTags) {
+                modalTags.innerHTML = '';
+                if (tags) {
+                    tags.split(',').forEach(tag => {
+                        const span = document.createElement('span');
+                        span.className = 'portfolio-tag !bg-pink-100 !text-pink-600';
+                        span.textContent = tag.trim();
+                        modalTags.appendChild(span);
+                    });
+                }
+            }
 
             renderMedia();
-
-            // Affichage modale
+            
             const modal = document.getElementById('portfolio-modal');
+            const content = document.getElementById('modal-content');
             modal.classList.remove('opacity-0', 'pointer-events-none');
             modal.classList.add('opacity-100', 'pointer-events-auto');
-            document.getElementById('modal-content').classList.remove('scale-95');
-            document.getElementById('modal-content').classList.add('scale-100');
-        }
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        };
+
+        window.closeModal = function() {
+            const video = document.getElementById('modalVideo');
+            if (video) { video.pause(); video.src = ""; }
+            
+            const modal = document.getElementById('portfolio-modal');
+            const content = document.getElementById('modal-content');
+            
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+            content.classList.remove('scale-100');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.add('scale-95');
+            
+            document.body.classList.remove('overflow-hidden', 'modal-open');
+        };
+
+        window.changeMedia = function(direction) {
+            currentMediaIndex += direction;
+            if (currentMediaIndex >= currentGallery.length) currentMediaIndex = 0;
+            if (currentMediaIndex < 0) currentMediaIndex = currentGallery.length - 1;
+            renderMedia();
+        };
 
         function renderMedia() {
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            
-            if (currentGallery.length <= 1) {
-                // S'il n'y a qu'une seule image, on cache tout
-                if(prevBtn) prevBtn.style.display = 'none';
-                if(nextBtn) nextBtn.style.display = 'none';
-            } else {
-                // Sinon on affiche
-                if(prevBtn) prevBtn.style.display = 'block';
-                if(nextBtn) nextBtn.style.display = 'block';
-            }
             const container = document.getElementById('modal-media-container');
             const loader = document.getElementById('media-loader');
-            const mediaPath = currentGallery[currentMediaIndex];
-            
-            // Mise à jour du compteur
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
             const counter = document.getElementById('media-counter');
-            counter.textContent = `${currentMediaIndex + 1} / ${currentGallery.length}`;
-            counter.style.display = currentGallery.length > 1 ? 'block' : 'none';
+            
+            if (!container) return;
 
-            // Affichage du loader
+            const hasMultiple = currentGallery.length > 1;
+            if(prevBtn) prevBtn.style.display = hasMultiple ? 'block' : 'none';
+            if(nextBtn) nextBtn.style.display = hasMultiple ? 'block' : 'none';
+            if(counter) {
+                counter.textContent = `${currentMediaIndex + 1} / ${currentGallery.length}`;
+                counter.style.display = hasMultiple ? 'block' : 'none';
+            }
+
+            const mediaPath = currentGallery[currentMediaIndex];
             if(loader) loader.classList.remove('hidden');
-            container.style.opacity = '0'; 
-            container.innerHTML = ''; 
+            container.style.opacity = '0';
+            container.innerHTML = '';
 
-            // --- FONCTION UTILITAIRE POUR CRÉER LE FOND FLOUTÉ ---
-            const createBackground = (type, src) => {
+            if (!mediaPath) return;
+
+            const createBg = (type, src) => {
                 const bg = document.createElement(type);
                 bg.src = src;
-                // Classes pour étirer l'image, la flouter et la mettre au fond
                 bg.className = "absolute inset-0 w-full h-full object-cover blur-xl opacity-60 scale-110 pointer-events-none";
-                if(type === 'video') {
-                    bg.muted = true;
-                    bg.autoplay = true;
-                    bg.loop = true;
-                    bg.playsInline = true;
-                }
+                if(type === 'video') { bg.muted = true; bg.autoplay = true; bg.loop = true; }
                 return bg;
             };
 
             if (mediaPath.toLowerCase().endsWith('.mp4')) {
-                // --- VIDÉO ---
-                
-                // 1. Création du fond flouté (Ambiance)
-                const bgVideo = createBackground('video', mediaPath);
+                const bgVideo = createBg('video', mediaPath);
                 container.appendChild(bgVideo);
 
-                // 2. Création de la vidéo principale (Nette)
                 const video = document.createElement('video');
                 video.src = mediaPath;
                 video.id = "modalVideo";
-                // "shadow-2xl" ajoute une ombre pour bien séparer la vidéo du fond
-                video.className = "relative w-full h-full object-contain z-10 shadow-2xl drop-shadow-lg"; 
-                video.autoplay = true;
-                video.loop = true;
-                video.muted = true;
-                video.playsInline = true;
-
+                video.className = "relative w-full h-full object-contain z-10 shadow-2xl drop-shadow-lg";
+                video.autoplay = true; video.loop = true; video.muted = true; video.playsInline = true;
+                
                 video.oncanplay = () => {
                     if(loader) loader.classList.add('hidden');
                     container.style.opacity = '1';
-                    // On s'assure que le fond joue aussi
-                    bgVideo.play().catch(e => console.log("Autoplay fond bloqué"));
+                    bgVideo.play().catch(()=>{});
                 };
-
                 container.appendChild(video);
 
-                // Ajout des contrôles de volume (identique à avant)
+                // Volume
                 const volWrapper = document.createElement('div');
                 volWrapper.className = 'volume-wrapper';
                 volWrapper.id = 'volumeContainer';
                 volWrapper.innerHTML = `
                     <div onclick="toggleMute(event)">
-                        <svg id="volumeIcon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" class="w-6 h-6">
-                            <path d="M11 5L6 9H2V15H6L11 19V5Z" />
-                            <line x1="23" y1="9" x2="17" y2="15" />
-                            <line x1="17" y1="9" x2="23" y2="15" />
-                        </svg>
+                        <svg id="volumeIcon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" class="w-6 h-6"><path d="M11 5L6 9H2V15H6L11 19V5Z" /><line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" /></svg>
                     </div>
                     <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0">
                 `;
                 container.appendChild(volWrapper);
                 setTimeout(setupVolumeControl, 10);
-
             } else {
-                // --- IMAGE ---
-
-                // 1. Création du fond flouté
-                const bgImg = createBackground('img', mediaPath);
+                const bgImg = createBg('img', mediaPath);
                 container.appendChild(bgImg);
-
-                // 2. Création de l'image principale
                 const img = document.createElement('img');
                 img.src = mediaPath;
-                // On retire le padding p-1 pour que l'image soit plus grande, l'ombre fait la séparation
-                img.className = "relative w-full h-full object-contain z-10 shadow-xl"; 
-                
+                img.className = "relative w-full h-full object-contain z-10 shadow-xl";
                 img.onload = () => {
                     if(loader) loader.classList.add('hidden');
                     container.style.opacity = '1';
                 };
-
                 container.appendChild(img);
             }
-            const nextIndex = (currentMediaIndex + 1) % currentGallery.length;
-            const nextPath = currentGallery[nextIndex];
-            
-            // Si ce n'est pas une vidéo, on force le navigateur à la télécharger maintenant
-            if (!nextPath.toLowerCase().endsWith('.mp4')) {
-                const preloadImg = new Image();
-                preloadImg.src = nextPath;
+            // Préchargement
+            if (hasMultiple) {
+                const nextIndex = (currentMediaIndex + 1) % currentGallery.length;
+                const nextPath = currentGallery[nextIndex];
+                if (nextPath && !nextPath.toLowerCase().endsWith('.mp4')) new Image().src = nextPath;
             }
         }
 
-        function changeMedia(direction) {
-            currentMediaIndex += direction;
-            if (currentMediaIndex >= currentGallery.length) currentMediaIndex = 0;
-            if (currentMediaIndex < 0) currentMediaIndex = currentGallery.length - 1;
-            renderMedia();
-        }
-
-        function closeModal() {
-            const video = document.getElementById('modalVideo');
-            if (video) {
-                video.pause();
-                video.src = "";
-            }
-            const modal = document.getElementById('portfolio-modal');
-            const modalContent = document.getElementById('modal-content');
-
-            // 1. On retire les classes qui forcent l'affichage
-            modal.classList.remove('opacity-100', 'pointer-events-auto');
-            modalContent.classList.remove('scale-100');
-
-            // 2. On remet les classes qui cachent la modale
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            modalContent.classList.add('scale-95');
-
-            document.body.classList.remove('overflow-hidden', 'modal-open');
-        }
-
+        // Volume helpers
         function setupVolumeControl() {
-        const video = document.getElementById('modalVideo');
-        const slider = document.getElementById('volumeSlider');
-        const icon = document.getElementById('volumeIcon');
-
-        if (!slider || !video) return;
-
-        // Changement du volume via le slider
-        slider.addEventListener('input', (e) => {
-            const val = e.target.value;
-            video.volume = val;
-            
-            if (val > 0) {
-                video.muted = false;
-                updateVolumeIcon(false);
-            } else {
-                video.muted = true;
-                updateVolumeIcon(true);
-            }
-        });
-
-        // Empêcher la fermeture de la modale quand on utilise le slider
-        slider.addEventListener('click', (e) => e.stopPropagation());
-    }
-
-    function toggleMute(event) {
-        event.stopPropagation();
-        const video = document.getElementById('modalVideo');
-        const slider = document.getElementById('volumeSlider');
-        
-        if (video.muted) {
-            video.muted = false;
-            video.volume = 0.5;
-            slider.value = 0.5;
-            updateVolumeIcon(false);
-        } else {
-            video.muted = true;
-            slider.value = 0;
-            updateVolumeIcon(true);
-        }
-    }
-
-    function updateVolumeIcon(isMuted) {
-        const icon = document.getElementById('volumeIcon');
-        if (isMuted) {
-            icon.innerHTML = `
-                <path d="M11 5L6 9H2V15H6L11 19V5Z" />
-                <line x1="23" y1="9" x2="17" y2="15" stroke="white" />
-                <line x1="17" y1="9" x2="23" y2="15" stroke="white" />
-            `;
-        } else {
-            icon.innerHTML = `
-                <path d="M11 5L6 9H2V15H6L11 19V5Z" />
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-            `;
-        }
-    }
-        
-        
-    // Navigation au clavier (Flèches Gauche/Droite)
-    document.addEventListener('keydown', function(e) {
-        if (document.getElementById('portfolio-modal').classList.contains('opacity-0')) return; // Si fermé, on fait rien
-
-        if (e.key === 'ArrowLeft') {
-            changeMedia(-1);
-        } else if (e.key === 'ArrowRight') {
-            changeMedia(1);
-        }
-    });
-        /**
-         * Alterne le son de la vidéo dans la modale
-         */
-        
-         function toggleVolume(event) {
-            // Empêche de fermer la modale si on clique sur le bouton
-            event.stopPropagation();
-            
             const video = document.getElementById('modalVideo');
+            const slider = document.getElementById('volumeSlider');
+            if (!slider || !video) return;
+            slider.addEventListener('input', (e) => {
+                video.volume = e.target.value;
+                video.muted = (e.target.value <= 0);
+                updateVolumeIcon(video.muted);
+            });
+            slider.addEventListener('click', e => e.stopPropagation());
+        }
+
+        window.toggleMute = function(event) {
+            event.stopPropagation();
+            const video = document.getElementById('modalVideo');
+            const slider = document.getElementById('volumeSlider');
+            if (!video) return;
+            if(video.muted) { video.muted = false; video.volume = 0.5; if(slider) slider.value = 0.5; }
+            else { video.muted = true; if(slider) slider.value = 0; }
+            updateVolumeIcon(video.muted);
+        };
+
+        function updateVolumeIcon(isMuted) {
             const icon = document.getElementById('volumeIcon');
-            
-            if (video.muted) {
-                video.muted = false;
-                // Changer l'icône pour "Son activé"
-                icon.innerHTML = `
-                    <path d="M11 5L6 9H2V15H6L11 19V5Z" />
-                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-                `;
-            } else {
-                video.muted = true;
-                // Revenir à l'icône "Mute"
-                icon.innerHTML = `
-                    <path d="M11 5L6 9H2V15H6L11 19V5Z" />
-                    <line x1="23" y1="9" x2="17" y2="15" />
-                    <line x1="17" y1="9" x2="23" y2="15" />
-                `;
-            }
-        }
-        // Fermer la modale en cliquant sur l'arrière-plan
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        // Fermer la modale en appuyant sur la touche ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) {
-                closeModal();
-            }
-        });
-
-        // 7. LOGIQUE DU BOUTON SCROLL-TO-TOP (NOUVEAU)
-        const scrollToTopButton = document.getElementById('scroll-to-top');
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            if(!icon) return;
+            icon.innerHTML = isMuted 
+                ? `<path d="M11 5L6 9H2V15H6L11 19V5Z" /><line x1="23" y1="9" x2="17" y2="15" stroke="white"/><line x1="17" y1="9" x2="23" y2="15" stroke="white"/>`
+                : `<path d="M11 5L6 9H2V15H6L11 19V5Z" /><path d="M15.54 8.46a5 5 0 0 1 0 7.07" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14" />`;
         }
 
-        // Afficher/masquer le bouton selon la position de défilement
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) { // Apparaît après 400px de défilement
-                scrollToTopButton.classList.add('show');
-            } else {
-                scrollToTopButton.classList.remove('show');
-            }
-        });
-        // --- NOUVELLES FONCTIONNALITÉS INTERACTIVES ---
-
-        // 1. Barre de progression au scroll
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        // Navigation Clavier & Swipe
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('portfolio-modal');
+            if (!modal || modal.classList.contains('opacity-0')) return;
+            if (e.key === 'ArrowLeft') changeMedia(-1);
+            if (e.key === 'ArrowRight') changeMedia(1);
+            if (e.key === 'Escape') closeModal();
         });
 
-        // 2. Effet Magnétique sur les boutons principaux
-        const magneticButtons = document.querySelectorAll('.btn-highlight, .btn-highlight-outline');
-        magneticButtons.forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                // Déplacement doux de 30% vers la souris
-                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = `translate(0px, 0px)`;
-            });
-        });
-
-        // Gestion du Swipe sur mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        const mediaContainer = document.getElementById('modal-media-container');
-
-        mediaContainer.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, {passive: true});
-
-        mediaContainer.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, {passive: true});
-
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                changeMedia(1); // Swipe vers la gauche -> Suivant
-            }
-            if (touchEndX > touchStartX + 50) {
-                changeMedia(-1); // Swipe vers la droite -> Précédent
-            }
+        const modalContainer = document.getElementById('modal-media-container');
+        if(modalContainer) {
+            let touchstartX = 0;
+            modalContainer.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX, {passive: true});
+            modalContainer.addEventListener('touchend', e => {
+                const touchendX = e.changedTouches[0].screenX;
+                if (touchendX < touchstartX - 50) changeMedia(1);
+                if (touchendX > touchstartX + 50) changeMedia(-1);
+            }, {passive: true});
         }
+
+        // Footer Date & Smooth Scroll Top
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        window.scrollToTop = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
     </script>
 </body>
 </html>
